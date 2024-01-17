@@ -11,6 +11,7 @@ python = ">=3.8,<4"
 semver = "^3"
 gitpython = "^3"
 sphinx = "^7"
+sphinx-immaterial = "^0"
 
 
 [tool.poetry.group.dev.dependencies]
