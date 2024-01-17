@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "bridle-tutorials"
+version = "0.1.0"
+description = "Bridle tutorials"
+authors = ["TiaC Systems"]
+license = "LICENSE"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4"
+semver = "^3"
+gitpython = "^3"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

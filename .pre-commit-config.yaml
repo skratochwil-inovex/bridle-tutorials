@@ -1,0 +1,46 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.13.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+      - id: commitizen-branch
+        stages: [push]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ".gitignore"
+      - id: mixed-line-ending
+        exclude: ".gitignore"
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+      - id: check-executables-have-shebangs
+      - id: check-vcs-permalinks
+      - id: check-symlinks
+      - id: destroyed-symlinks
+      - id: detect-private-key
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.17
+    hooks:
+      - id: mdformat        # CommonMark compliant Markdown formatter
+        additional_dependencies:
+          - mdformat-gfm    # plugin for GitHub Flavored Markdown (GFM)
+          - mdformat-myst   # plugin for Markedly Structured Text (MyST)
+          - mdformat-black  # plugin for Blacken Python code blocks
+
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.0
+    hooks:
+      - id: rstcheck        # Checks syntax of reStructuredText
+        additional_dependencies: [sphinx]
