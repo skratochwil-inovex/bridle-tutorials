@@ -3,6 +3,9 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from datetime import date
+
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -46,8 +49,60 @@ rinoh_documents = [dict(doc='index', target='bridle-tutorials')]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+html_title = project
+html_favicon = '_static/images/bridle.ico'
+html_logo = '_static/images/bridle.svg'
+
 html_theme = 'sphinx_immaterial'
 html_static_path = ['_static']
+html_theme_options = {
+    "icon": {
+        "repo": "fontawesome/brands/github",
+    },
+    "repo_url": "https://github.com/tiacsys/bridle-tutorials/",
+    "repo_name": "TiaCSys/Bridle-Tutorials",
+    "globaltoc_collapse": True,
+    "features": [
+        "navigation.expand",
+        # "navigation.tabs",
+        # "toc.integrate",
+        "navigation.sections",
+        # "navigation.instant",
+        # "header.autohide",
+        "navigation.top",
+        # "navigation.tracking",
+        # "search.highlight",
+        "search.share",
+        "toc.follow",
+        "toc.sticky",
+        "content.tabs.link",
+        "announce.dismiss",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "indigo",
+            "accent": "amber",
+            "toggle": {
+                "icon": "material/weather-sunny",
+                "name": "In den dunklen Modus wechseln",
+                # "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "indigo",
+            "accent": "amber",
+            "toggle": {
+                "icon": "material/weather-night",
+                "name": "In den hellen Modus wechseln",
+                # "name": "Switch to light mode",
+            },
+        },
+    ],
+}
 
 # -- Options for intersphinx extension ---------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html#configuration
