@@ -186,6 +186,20 @@ files = [
 ]
 
 [[package]]
+name = "commonmark"
+version = "0.9.1"
+description = "Python parser for the CommonMark Markdown spec"
+optional = false
+python-versions = "*"
+files = [
+    {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
+    {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
+]
+
+[package.extras]
+test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
+
+[[package]]
 name = "distlib"
 version = "0.3.8"
 description = "Distribution utilities"
@@ -692,6 +706,22 @@ files = [
 ]
 
 [[package]]
+name = "recommonmark"
+version = "0.7.1"
+description = "A docutils-compatibility bridge to CommonMark, enabling you to write CommonMark inside of Docutils & Sphinx projects."
+optional = false
+python-versions = "*"
+files = [
+    {file = "recommonmark-0.7.1-py2.py3-none-any.whl", hash = "sha256:1b1db69af0231efce3fa21b94ff627ea33dee7079a01dd0a7f8482c3da148b3f"},
+    {file = "recommonmark-0.7.1.tar.gz", hash = "sha256:bdb4db649f2222dcd8d2d844f0006b958d627f732415d399791ee436a3686d67"},
+]
+
+[package.dependencies]
+commonmark = ">=0.8.1"
+docutils = ">=0.11"
+sphinx = ">=1.3.1"
+
+[[package]]
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
@@ -711,6 +741,84 @@ urllib3 = ">=1.21.1,<3"
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
+
+[[package]]
+name = "rinoh-typeface-dejavuserif"
+version = "0.1.3"
+description = "DejaVu Serif typeface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rinoh-typeface-dejavuserif-0.1.3.tar.gz", hash = "sha256:8be129230ac98ab2ebfbf5b570575052ba7069e4087ce36a2d4c1d85182833ce"},
+    {file = "rinoh_typeface_dejavuserif-0.1.3-py3-none-any.whl", hash = "sha256:35ba67bf25e526b4b8180dc31d8fa2ff9b594d924e8790e8074699cd2f0e7da8"},
+]
+
+[package.dependencies]
+rinohtype = "*"
+
+[[package]]
+name = "rinoh-typeface-texgyrecursor"
+version = "0.1.1"
+description = "TeX Gyre Cursor typeface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rinoh-typeface-texgyrecursor-0.1.1.tar.gz", hash = "sha256:076f7dbbd0201b0d44f4c77e4f7070474e1365152dc8509b5cded04c1648308a"},
+    {file = "rinoh_typeface_texgyrecursor-0.1.1-py3-none-any.whl", hash = "sha256:98080e6af2271e67cff1d69033cb6c3a6baa58de41a66dce1a1102b4dd41de72"},
+]
+
+[package.dependencies]
+rinohtype = "*"
+
+[[package]]
+name = "rinoh-typeface-texgyreheros"
+version = "0.1.1"
+description = "TeX Gyre Heros typeface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rinoh-typeface-texgyreheros-0.1.1.tar.gz", hash = "sha256:fd7082e917bccc292894447f11d15a3efce9f1386056118b57b66cc2f5a36bbd"},
+    {file = "rinoh_typeface_texgyreheros-0.1.1-py3-none-any.whl", hash = "sha256:0c921a040a84b0af031e4a36d196d46b65fb18929d88df5ed26533b57100e6c9"},
+]
+
+[package.dependencies]
+rinohtype = "*"
+
+[[package]]
+name = "rinoh-typeface-texgyrepagella"
+version = "0.1.1"
+description = "TeX Gyre Pagella typeface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rinoh-typeface-texgyrepagella-0.1.1.tar.gz", hash = "sha256:53f4dba338c6b1df758888f23ce1ed728e5be45746f161488ad3b944e5e79fd2"},
+    {file = "rinoh_typeface_texgyrepagella-0.1.1-py3-none-any.whl", hash = "sha256:0144e3b828a31b405ab9be1dec67f48be360d9f86d109578924fd1d7e0e1ded6"},
+]
+
+[package.dependencies]
+rinohtype = "*"
+
+[[package]]
+name = "rinohtype"
+version = "0.5.4"
+description = "The Python document processor"
+optional = false
+python-versions = ">=3.7.0,<4.0.0"
+files = [
+    {file = "rinohtype-0.5.4-py3-none-any.whl", hash = "sha256:3c6dc2a7d47fcd9dd99da13cc3ebc06dab2af94f28b04cf16c5d62c3035f188a"},
+    {file = "rinohtype-0.5.4.tar.gz", hash = "sha256:3869229b498dd64dce3a196ed39583ee3771e21accddd67e80ae19a41a52c3ca"},
+]
+
+[package.dependencies]
+appdirs = ">=1.4.3,<2.0.0"
+docutils = ">=0.15"
+packaging = ">=14.0"
+recommonmark = ">=0.6.0"
+rinoh-typeface-dejavuserif = ">=0.1.3,<0.2.0"
+rinoh-typeface-texgyrecursor = ">=0.1.1,<0.2.0"
+rinoh-typeface-texgyreheros = ">=0.1.1,<0.2.0"
+rinoh-typeface-texgyrepagella = ">=0.1.1,<0.2.0"
+Sphinx = ">=2.2.1"
 
 [[package]]
 name = "semver"
@@ -977,4 +1085,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4"
-content-hash = "ad22d429c3fbffeb1504bf67c9c37a8b27ddcac53f5223617e154613202cb43a"
+content-hash = "bd55f36889930a2916605582d30028d4a574a4e08f957dfe3c07867daaf91899"
