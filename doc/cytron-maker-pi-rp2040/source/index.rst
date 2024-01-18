@@ -8,14 +8,21 @@
 #########
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :caption: Inhalte:
+   :maxdepth: 1
+   :glob:
 
+   */index
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
 
-Indices and tables
-==================
+   todo
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. only:: html
+
+   .. rubric:: Index und Tabellen
+
+   * :ref:`genindex`
+   * :ref:`gentodo`
