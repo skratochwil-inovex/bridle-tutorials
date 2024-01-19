@@ -44,7 +44,13 @@ rst_prolog = '''
 # -- Options for PDF output --------------------------------------------------
 # https://www.mos6581.org/rinohtype/master/quickstart.html#sphinx-quickstart
 
-rinoh_documents = [dict(doc='index', target='bridle-tutorials')]
+rinoh_documents = [
+    dict(doc='index', target='bridle-tutorials',
+         title = project, author = author,
+         template = '_styles/rinohtype/bridle.rtt',
+         logo = '_static/images/bridle_text.pdf',
+    ),
+]
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
