@@ -158,16 +158,16 @@ Ready to contribute? Here's how to set yourself up for local development.
 1. Optional run tests on documentation and build them offline:
 
    ```bash
-   $ make -C doc/cytron-maker-pi-rp2040 html
-   $ python3 -m http.server -d doc/cytron-maker-pi-rp2040/build/html 8000
+   $ make -C cytron-maker-rp2040 html
+   $ python3 -m http.server -d cytron-maker-rp2040/build/html 8000
    $ xdg-open http://localhost:8000/
    ```
 
 1. Optional run tests on the PDF manual and build them offline:
 
    ```
-   $ make -C doc/cytron-maker-pi-rp2040 rinoh
-   $ xdg-open doc/cytron-maker-pi-rp2040/build/rinoh/bridle-tutorials.pdf
+   $ make -C cytron-maker-rp2040 rinoh
+   $ xdg-open cytron-maker-rp2040/build/rinoh/bridle-tutorials.pdf
    ```
 
 1. Commit your changes and push your branch to GitHub:
