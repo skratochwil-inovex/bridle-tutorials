@@ -167,7 +167,7 @@ Ready to contribute? Here's how to set yourself up for local development.
 
    ```
    $ make -C cytron-maker-rp2040 rinoh
-   $ xdg-open cytron-maker-rp2040/build/rinoh/bridle-tutorials.pdf
+   $ xdg-open cytron-maker-rp2040/build/rinoh/bridle-tutorial.pdf
    ```
 
 1. Commit your changes and push your branch to GitHub:
