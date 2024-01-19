@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Bridle tutorials'
-copyright = '2024, TiaC Systems'
+project = 'Cytron Maker RP2040 Tutorials'
+copyright = f'{date.today().year}, TiaC Systems'
 author = 'TiaC Systems'
 
 version = '0.1.0'
@@ -27,6 +27,16 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 language = 'de'
+
+rst_prolog = '''
+.. |copyright| replace:: {copyright}
+.. |project| replace:: {project}
+.. |author| replace:: {author}
+'''.format(
+    copyright = copyright,
+    project = project,
+    author = author,
+)
 
 # -- Options for PDF output --------------------------------------------------
 # https://www.mos6581.org/rinohtype/master/quickstart.html#sphinx-quickstart
