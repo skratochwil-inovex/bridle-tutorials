@@ -1,5 +1,5 @@
-Benutzung von Zephyr Demos
-##########################
+Benutzung von Beispielen
+########################
 
 .. toctree::
    :caption: Übungen
