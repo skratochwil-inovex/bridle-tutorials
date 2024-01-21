@@ -785,6 +785,20 @@ files = [
 rinohtype = "*"
 
 [[package]]
+name = "rinoh-typeface-symbola"
+version = "0.1.1"
+description = "Symbola typeface"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "rinoh-typeface-symbola-0.1.1.tar.gz", hash = "sha256:4ba94e0dcaadb4d29d227f292b3e3ad89f1d3ccbf7f5aecd585571d96c35e99e"},
+    {file = "rinoh_typeface_symbola-0.1.1-py3-none-any.whl", hash = "sha256:482fb0ac83997b39b989596903f70b2139f96d0393dfc3bfe1eba399552f7d18"},
+]
+
+[package.dependencies]
+rinohtype = "*"
+
+[[package]]
 name = "rinoh-typeface-texgyrecursor"
 version = "0.1.1"
 description = "TeX Gyre Cursor typeface"
@@ -1113,4 +1127,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4"
-content-hash = "75360a9fffa5379e221635f1789e157994bd65b10731b243c8ac0c425aab9b57"
+content-hash = "f54eed19bfc89ffbb75fd95c7c05ee24a7548d44e14ef0c7d50071e153013134"
