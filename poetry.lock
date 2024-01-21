@@ -757,6 +757,20 @@ files = [
 rinohtype = ">=0.4.3"
 
 [[package]]
+name = "rinoh-typeface-dejavusansmono"
+version = "0.1.0"
+description = "DejaVu Sans Mono typeface"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rinoh-typeface-dejavusansmono-0.1.0.tar.gz", hash = "sha256:534f28abe638630dd1413e37ae85cf07f78f75ae8e62040d3fa225f590200765"},
+    {file = "rinoh_typeface_dejavusansmono-0.1.0-py3-none-any.whl", hash = "sha256:72dcb91a09f1eec0178d4753a127d3c32f3ea4ddea9084a5bdee059dffb75b3e"},
+]
+
+[package.dependencies]
+rinohtype = ">=0.4.3"
+
+[[package]]
 name = "rinoh-typeface-dejavuserif"
 version = "0.1.3"
 description = "DejaVu Serif typeface"
@@ -1099,4 +1113,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4"
-content-hash = "9a8887756f5d1eb05104c29195c0bd27183a05242f408828da7764d29b3b4237"
+content-hash = "75360a9fffa5379e221635f1789e157994bd65b10731b243c8ac0c425aab9b57"

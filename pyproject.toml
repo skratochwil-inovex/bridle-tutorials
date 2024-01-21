@@ -15,6 +15,7 @@ sphinx-immaterial = "^0"
 rinohtype = "^0"
 rinoh-typeface-dejavuserif = "^0"
 rinoh-typeface-dejavusans = "^0"
+rinoh-typeface-dejavusansmono = "^0"
 
 
 [tool.poetry.group.dev.dependencies]
