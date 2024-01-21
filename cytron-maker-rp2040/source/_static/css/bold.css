@@ -1,0 +1,38 @@
+span.bold {
+  font-weight: bold;
+}
+
+span.bold-red {
+  font-weight: bold;
+  color: var(--docset-color-theme-red);
+}
+
+span.bold-green {
+  font-weight: bold;
+  color: var(--docset-color-theme-green);
+}
+
+span.bold-blue {
+  font-weight: bold;
+  color: var(--docset-color-theme-blue);
+}
+
+span.bold-cyan {
+  font-weight: bold;
+  color: var(--docset-color-theme-cyan);
+}
+
+span.bold-yellow {
+  font-weight: bold;
+  color: var(--docset-color-theme-yellow);
+}
+
+span.bold-black {
+  font-weight: bold;
+  color: var(--docset-color-black);
+}
+
+span.bold-white {
+  font-weight: bold;
+  color: var(--docset-color-white);
+}

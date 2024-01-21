@@ -1,149 +1,251 @@
+;
+; Document Style Sheet for Bridle
+;
+; https://www.mos6581.org/rinohtype/master/basicstyling.html#style-sheets
+;
+; Refer to Default Matcher to find out which style attributes are
+; accepted by each style (by following the hyperlink to the style:
+; class’s documentation):
+;
+; https://www.mos6581.org/rinohtype/master/stylesheets.html#default-matcher
+;
+
 [STYLESHEET]
 name = bridle
+description = RinohType Style for Bridle
 pygments_style = colorful
 
 [VARIABLES]
-mono_typeface=TeX Gyre Cursor
-serif_typeface=TeX Gyre Pagella
-sans_typeface=Tex Gyre Heros
-fallback_typeface=DejaVu Serif
-thin_black_stroke=0.5pt,#000
-theme_color=#15729d
+mono_typeface = DejaVu Sans Mono
+serif_typeface = DejaVu Serif
+sans_typeface = DejaVu Sans
+fallback_typeface = Symbola
+color_black = #000
+color_white = #fff
+color_red = #f00
+color_green = #0f0
+color_blue = #00f
+theme_color_red = #cd5c5c
+theme_color_green = #228b22
+theme_color_blue = #4169e1
+theme_color_cyan = #48d1cc
+theme_color_yellow = #ffd700
+theme_inverted_color = #fff
+theme_color = #15729d
+theme_color_stroke_rd = #cf1755
+theme_color_stroke_gn = #45b04a
+theme_color_bg_yellow = #ffffe5
+theme_color_bg_gray = #f5f5f5
+thin_black_stroke = 0.5pt,#000
+thin_white_stroke = 0.5pt,#fff
+thin_theme_stroke = 0.5pt,#15729d
+thin_themerd_stroke = 0.5pt,#cf1755
+thin_themegn_stroke = 0.5pt,#45b04a
+slim_black_stroke = 1.0pt,#000
+slim_white_stroke = 1.0pt,#fff
+slim_theme_stroke = 1.0pt,#15729d
+slim_themerd_stroke = 1.0pt,#cf1755
+slim_themegn_stroke = 1.0pt,#45b04a
+thick_black_stroke = 1.5pt,#000
+thick_white_stroke = 1.5pt,#fff
+thick_theme_stroke = 1.5pt,#15729d
+thick_themerd_stroke = 1.5pt,#cf1755
+thick_themegn_stroke = 1.5pt,#45b04a
 
-[default:Paragraph]
-typeface=$(serif_typeface)
-font_weight=REGULAR
-font_size=10pt
-line_spacing=fixed(12pt, leading(0))
-indent_first=0
-space_above=0
-space_below=0
-text_align=justify
-kerning=True
-ligatures=True
-hyphen_lang=en_US
-hyphen_chars=4
+[default : Paragraph]
+typeface = $(serif_typeface)
+font_weight = regular
+font_size = 10pt
+line_spacing = fixed(12pt, leading(0))
+indent_first = 0
+space_above = 0
+space_below = 0
+text_align = justify
+kerning = true
+ligatures = true
+hyphen_lang = en_US
+hyphen_chars = 4
+
+[fallback]
+typeface = $(fallback_typeface)
 
 [body]
-base=default
-space_above=5pt
-space_below=0
+base = default
+space_above = 5pt
+space_below = 0
+text_align = justify
 
 [bold]
-font_weight=BOLD
-
-[emphasis]
-font_slant=italic
+font_weight = bold
 
 [strong]
-font_weight=BOLD
+font_weight = bold
+
+[italic]
+font_slant = italic
+
+[emphasis]
+font_slant = italic
 
 [monospaced]
-typeface=$(mono_typeface)
-hyphenate=False
-ligatures=False
+typeface = $(mono_typeface)
+hyphenate = false
+ligatures = false
 
 [literal emphasis]
-base=emphasis
-typeface=$(mono_typeface)
-hyphenate=False
-ligatures=False
+base = emphasis
+typeface = $(mono_typeface)
+hyphenate = false
+ligatures = false
 
 [literal strong]
-base=strong
-typeface=$(mono_typeface)
-hyphenate=False
-ligatures=False
+base = strong
+typeface = $(mono_typeface)
+hyphenate = false
+ligatures = false
+
+[inline math]
+base = monospaced
+
+[quote]
+font_slant = italic
 
 [file path]
-base=monospaced
-ligatures=False
+base = monospaced
+ligatures = false
 
 [keystrokes]
-base=monospaced
-ligatures=False
+base = monospaced
+ligatures = false
 
 [regular expression]
-base=monospaced
-ligatures=False
-hyphenate=False
+base = monospaced
+ligatures = false
+hyphenate = false
 
 [code with variable]
-base=monospaced
-ligatures=False
-hyphenate=False
+base = monospaced
+ligatures = false
+hyphenate = false
 
 [mail header]
-base=literal emphasis
+base = literal emphasis
 
 [MIME type]
-base=literal emphasis
+base = literal emphasis
 
 [newsgroup]
-base=literal emphasis
+base = literal emphasis
 
 [command]
-base=literal strong
+base = literal strong
 
 [make variable]
-base=literal strong
+base = literal strong
 
 [program]
-base=literal strong
+base = literal strong
 
 [man page]
-base=literal emphasis
+base = literal emphasis
 
 [window title]
-font_weight=BOLD
+font_weight = bold
 
 [UI control]
-font_slant=italic
+font_slant = italic
 
 [UI control accelerator]
-font_weight=bold
+font_weight = bold
 
 [menu cascade]
-font_weight=BOLD
+font_weight = bold
 
 [draft comment]
-font_color=#f00
+font_color = $(color_red)
 
 [title reference]
-font_slant=ITALIC
+font_slant = italic
 
-[table of contents section]
-show_in_toc=False
+[error]
+font_color = $(color_red)
 
-[table of contents]
-base=default
-indent_first=0
-depth=2
+[linked reference]
+;font_color = #355f7c
+font_color = #4d4d4d
 
-[reference in toc : 'table of contents' / ... / ReferenceField]
+[external hyperlink]
+;font_color = #376f62
+font_color = #004d4d
 
-[toc level 1]
-base=table of contents
-font_color=$(theme_color)
-font_weight=BOLD
-space_above=14pt
-;margin_left=-2cm
-text = '\t{PAGE}' (bold) '\tChapter {NUMBER}: {TITLE}'
-tab_stops = 1cm right, 1.5cm
+[broken hyperlink]
+;font_color = #7f7f7f
+font_color = $(color_red)
 
-[toc level 1 index : TableOfContentsEntry(depth=1, target_is_of_type='IndexSection')]
-base=toc level 1
-text = '\t{PAGE}' (bold) '\t{TITLE}'
+[glossary inline definition]
+before = ' ('
+after = ')'
 
-[toc level 2]
-base=table of contents
-;margin_left=18pt
-space_above=4pt
-text = '\t{PAGE}' (bold) '\t{TITLE}'
-tab_stops = 1cm right, 1.5cm
+[code block]
+base = default
+background_color = $(theme_color_bg_gray)
+padding_left = 5pt
+padding_right = 0
+padding_top = 4pt
+padding_bottom = 4pt
+typeface = $(mono_typeface)
+font_size = 9pt
+text_align = left
+indent_first = 0
+space_above = 4pt
+space_below = 4pt
+ligatures = false
+hyphenate = false
+border = $(thin_black_stroke)
+
+[code block caption]
+base = caption
+keep_with_next = true
+
+[math block]
+base = code block
+border = none
+
+[graphviz code block]
+base = code block
+border = none
+
+[block quote]
+margin_left = 1cm
+
+[attribution]
+base = default
+text_align = right
+
+[centered]
+base = default
+text_align = center
+font_weight = bold
+space_below = 4pt
+
+[horizontal rule]
+space_above = 10pt
+space_below = 20pt
+margin_left = 40pt
+;margin_right = 40pt
+margin_right = 0
+stroke = $(thin_theme_stroke)
+keep_with_next = true
+
+[line block]
+base = body
+text_align = left
 
 [chapter]
-page_break=right
+page_break = right
+
+[content chapter]
+base = chapter
 
 [chapter title : Paragraph('chapter title')]
 background_color = #e8e8e8
@@ -154,11 +256,10 @@ padding_right = 1in
 padding_top = 4mm
 padding_bottom = 4mm
 border_top = 1mm,#15729d
-
-space_above = 2 cm
+space_above = 2cm
 typeface = $(sans_typeface)
+font_width = condensed
 font_size = 24pt
-
 ;font_color = #fff
 ;font_weight = bold
 text_align = left
@@ -170,15 +271,19 @@ font_size = 30pt
 
 [heading level 1]
 typeface = $(sans_typeface)
-number_format = NUMBER
+font_width = condensed
+number_format = number
+;label_suffix = ' '
+page_break = any
 
 [unnumbered heading level 1]
-base=heading level 1
-number_format=None
+base = heading level 1
+number_format = none
 
 [heading level 2]
 base = heading level 1
-font_weight = BOLD
+font_width = normal
+;font_weight = bold
 font_size = 12pt
 font_color = $(theme_color)
 space_above = 28pt
@@ -189,278 +294,438 @@ label_suffix = '\t'
 tab_stops = 12mm
 
 [heading level 3]
-base=heading level 2
-font_size=10pt
-space_above=24pt
-space_below=6pt
+base = heading level 2
+space_above = 20pt
+space_below = 6pt
 
 [heading level 4]
-base=heading level 3
-font_size=9pt
-space_above=8pt
-space_below=4pt
-margin_left=0
-number_format=None
+base = heading level 3
+font_size = 10pt
+font_width = expanded
+font_variant = small capital
+space_above = 6pt
+space_below = 6pt
+margin_left = 0
+number_format = none
+page_break = none
 
 [heading level 5]
-base=heading level 4
-font_size=9pt
-font_slant=ITALIC
-font_weight=REGULAR
-line_spacing=Fixed(10pt)
-space_above=2pt
-space_below=2pt
-number_format=None
+base = heading level 4
+font_size = 9pt
+font_slant = italic
+font_weight = regular
+line_spacing = Fixed(10pt)
+space_above = 4pt
+space_below = 4pt
+number_format = none
 
 [other heading levels]
-base=heading level 5
-font_size=9pt
-font_slant=ITALIC
-font_weight=REGULAR
-line_spacing=Fixed(10pt)
-space_above=2pt
-space_below=2pt
-number_format=None
+base = heading level 5
+font_size = 9pt
+font_slant = italic
+font_weight = regular
+line_spacing = Fixed(10pt)
+space_above = 2pt
+space_below = 2pt
+number_format = none
 
+[appendix heading level 1]
+base = heading level 1
+number_format = uppercase character
 
-[linked reference]
-font_color=#4d4d4d
+[title]
+base = default
+font_weight = bold
+indent_first = 0
+space_above = 10pt
+space_below = 5pt
 
-[external hyperlink]
-font_color=#004d4d
+[topic]
+space_above = 5pt
+space_below = 5pt
+margin_left = 0.5cm
+margin_right = 0.5cm
+border = $(slim_black_stroke)
+padding_left = 10pt
+padding_right = 10pt
+padding_top = 4pt
+padding_bottom = 4pt
+background_color = $(theme_color_bg_gray)
 
-[broken hyperlink]
-font_color=#ff0000
+[topic title]
+base = default
+typeface = $(sans_typeface)
+font_size = 12pt
+font_weight = bold
+font_color = $(theme_color)
+text_align = center
+indent_first = 0
+space_above = 5pt
+space_below = 5pt
 
+[post requirement]
 
-[enumerated list]
-margin_left=8pt
-space_above=1pt
-space_below=5pt
-ordered=True
-flowable_spacing=1pt
-number_format=NUMBER
-label_suffix=')'
+[rubric]
+typeface = $(sans_typeface)
+font_size =12pt
+font_width = condensed
+font_weight = normal
+;font_weight = bold
+font_color = $(theme_color)
+space_above = 8pt
 
-[nested enumerated list]
-base=enumerated list
-margin_left=10pt
+[sidebar]
+space_above = 5pt
+space_below = 5pt
+margin_left = 0.5cm
+margin_right = 0.5cm
+border = $(slim_black_stroke)
+padding_left = 10pt
+padding_right = 10pt
+padding_top = 4pt
+padding_bottom = 4pt
+background_color = $(theme_color_bg_yellow)
 
-[bulleted list]
-base=enumerated list
-ordered=False
-label_suffix=None
+[sidebar title]
+base = default
+typeface = $(sans_typeface)
+font_size = 12pt
+font_weight = bold
+font_color = $(theme_color)
+text_align = center
+indent_first = 0
+space_above = 5pt
+space_below = 5pt
 
-[nested bulleted list]
-base=bulleted list
-margin_left=10pt
+[sidebar subtitle]
+base = default
+typeface = $(sans_typeface)
+font_weight = bold
+font_color = $(theme_color)
+text_align = center
+indent_first = 0
+space_above = 2pt
+space_below = 2pt
 
 [list item label]
-base=default
-indent_first=0
-text_align=RIGHT
+base = default
+indent_first = 0
+text_align = right
+margin_right = 4pt
 font_color = $(theme_color)
 
-[list item paragraph]
-base=body
-space_above=0
+[list item body]
+space_above = 0
+space_below = 0
+margin_left = 0
+margin_right = 0
 
-[bulleted list item label]
-base=list item label
+[list item paragraph]
+base = body
+;space_above = 0
+;margin_left = 0
+;indent_first = 0
+
+[enumerated list]
+margin_left = 8pt
+space_above = 1pt
+space_below = 5pt
+ordered = true
+flowable_spacing = 1pt
+number_format = number
+label_suffix = ')'
 
 [enumerated list item label]
-base=list item label
+base = list item label
 
+[nested enumerated list]
+base = enumerated list
+margin_left = 10pt
+
+[bulleted list]
+base = enumerated list
+ordered = false
+label_suffix = none
+
+[bulleted list item label]
+base = list item label
+
+[nested bulleted list]
+base = bulleted list
+margin_left = 10pt
+
+[steps list]
+base = enumerated list
+
+[steps list item label]
+base = enumerated list item label
+
+[unordered steps list]
+base = bulleted list
+
+[unordered steps list item label]
+base = bulleted list item label
+
+[choices list]
+base = bulleted list
+
+[choices list item label]
+base = bulleted list item label
 
 [definition list]
 
 [definition list item]
-label_min_width=17pt
-label_max_width=0
+space_above = 8pt
+label_min_width = 17pt
+label_max_width = 0
 
 [definition term]
-space_above=4pt
-keep_with_next=true
+space_above = 4pt
+keep_with_next = true
 
 [definition term paragraph]
-base=default
-indent_first=0
-font_weight=BOLD
+base = default
+indent_first = 0
+font_weight = bold
 
 [definition term classifier]
-font_weight=REGULAR
-font_slant=italic
+font_weight = regular
+font_slant = italic
 
 [definition]
 
 [definition paragraph]
-base=body
-space_above=1pt
+base = body
+space_above = 1pt
 
-[image]
-space_above=10pt
-horizontal_align=CENTER
+;
+; (Sphinx) version added/changed & deprecated
+;
 
-[figure]
-space_above=10pt
-space_below=12pt
+[versionmodified]
+font_slant = italic
 
-[figure image]
-base=image
-keep_with_next=true
-
-[caption : Caption]
-base=default
-font_size=9pt
-line_spacing=Fixed(10pt)
-indent_first=0pt
-space_above=4pt
-space_below=0pt
-text_align=CENTER
-label_suffix=' '
-
-[figure caption]
-base=caption
-
-[figure legend]
-margin_left=30pt
-
-[figure legend paragraph]
-base=caption
-space_above=5pt
-text_align=LEFT
-
-# (Sphinx) object descriptions
+;
+; (Sphinx) object descriptions
+;
 
 [object description]
-base=definition list item
-space_above=3pt
-space_below=3pt
-label_max_width=0
+base = definition list item
+space_above = 3pt
+space_below = 3pt
+label_max_width = 0
 
 [object signatures]
-base=definition term
+base = definition term
 
 [object signature]
-base=definition term paragraph
-font_weight=regular
+base = definition term paragraph
+font_weight = regular
 
 [object name]
-typeface=$(mono_typeface)
-font_weight=BOLD
-ligatures=False
-hyphenate=False
+typeface = $(mono_typeface)
+font_weight = bold
+ligatures = false
+hyphenate = false
 
 [additional name part]
-base=monospaced
+base = monospaced
 
 [object type]
 
 [object returns]
 
 [object parentheses]
-font_size=11pt
+font_size = 11pt
 
 [object parameter list]
 
 [object parameter (no emphasis)]
 
 [object parameter]
-base=object parameter (no emphasis)
-font_slant=ITALIC
+base = object parameter (no emphasis)
+font_slant = italic
 
 [object brackets]
-font_size=11pt
-font_weight=BOLD
+font_size = 11pt
+font_weight = bold
 
 [object optional parameter]
 
 [object annotation]
-font_weight=BOLD
+font_weight = bold
 
 [object description content]
-base=definition
+base = definition
 
 [object description content paragraph]
-base=body
-space_above=1pt
+base = body
+space_above = 1pt
 
-#
+;
+; (Sphinx) production list
+;
 
-[code block]
+[production list]
+space_above = 5pt
+space_below = 5pt
+
+[production]
+
+[token name]
+base = literal
+font_weight = bold
+space_above = 0
+space_below = 0
+
+[token definition]
+base = literal
+space_above = 0
+space_below = 0
+
+;
+; (Sphinx) field lists
+;
+
+[field list]
+
+;[field list item]
+;label_max_width = 80pt
+
+[field name]
 base = default
-background_color = #f5f5f5
-padding_left = 5pt
-padding_right = 0
-padding_top = 4pt
-padding_bottom = 4pt
-typeface = $(mono_typeface)
-font_size = 9pt
-text_align = LEFT
 indent_first = 0
-space_above = 4pt
-space_below = 4pt
-ligatures = False
-hyphenate = False
+text_align = left
+typeface = $(sans_typeface)
+font_color = $(theme_color)
+font_weight = bold
+
+;
+; (Sphinx) option lists
+;
+
+[option list]
+
+[option list item]
+base = field list item
+
+[option]
+base = body
+indent_first = 0
+text_align = left
+
+[option string]
+base = default
+typeface = $(mono_typeface)
+font_size = 8pt
+ligatures = false
+hyphenate = false
+
+[option argument]
+base = default
+font_slant = italic
+
+;
+; (Sphinx) admonitions
+;
 
 [admonition]
-inline_title=false
-space_above=9pt
-space_below=5pt
-padding_top=0
-padding_bottom=6pt
-border_top=$(thin_black_stroke)
-border_bottom=$(thin_black_stroke)
+inline_title = false
+space_above = 9pt
+space_below = 5pt
+padding_top = 0
+padding_bottom = 8pt
+;border_top = $(thin_theme_stroke)
+;border_bottom = $(thin_theme_stroke)
+padding_left = 8pt
+padding_right = 8pt
+border = $(thin_theme_stroke)
 
 [admonition title]
-base=default
-keep_with_next=true
-font_weight=BOLD
-indent_first=0
-space_above=5pt
-space_below=2pt
+base = default
+keep_with_next = true
+typeface = $(sans_typeface)
+font_color = $(theme_color)
+font_weight = bold
+indent_first = 0
+space_above = 5pt
+space_below = 2pt
 
 [admonition inline title]
-base=admonition title
+base = admonition title
 
 [builtin admonition:Admonition]
-base=admonition
-inline_title=true
+base = admonition
+inline_title = true
 
 [boxed builtin admonition:Admonition]
-base=builtin admonition
-border=$(thin_black_stroke)
-padding_left=8pt
-padding_right=8pt
+base = builtin admonition
+border = $(thin_theme_stroke)
+padding_left = 8pt
+padding_right = 8pt
 
 [red adminition title:Paragraph]
-base=admonition title
-font_color=#f00
+base = admonition title
+font_color = $(color_red)
 
 [attention admonition]
-base=boxed builtin admonition
+base = boxed builtin admonition
 
 [caution admonition]
-base=boxed builtin admonition
+base = boxed builtin admonition
 
 [danger admonition]
-base=boxed builtin admonition
+base = boxed builtin admonition
 
 [warning admonition]
-base=boxed builtin admonition
+base = boxed builtin admonition
 
-[header]
-base=default
-typeface=$(sans_typeface)
-font_size=10pt
+[error admonition]
+base = boxed builtin admonition
+
+[hint admonition]
+base = builtin admonition
+
+[important admonition]
+base = builtin admonition
+
+[note admonition]
+base = builtin admonition
+
+[tip admonition]
+base = builtin admonition
+
+[seealso admonition]
+base = admonition
+border_top = none
+border_bottom = none
+
+;
+; (Sphinx) header & footer
+;
+
+[header_footer:Paragraph]
+base = default
+typeface = $(sans_typeface)
+font_width = condensed
+font_size = 10pt
+font_weight = bold
+indent_first = 0
+;tab_stops = 50% center, 100% right
+tab_stops = 2.5cm, 18cm right
 margin_left = -2.5cm
 margin_right = -1cm
-indent_first = 0pt
-tab_stops = 2.5cm, 18cm RIGHT
+
+[header]
+base = header_footer
+;border_bottom = $(thin_black_stroke)
+;padding_bottom = 2pt
 space_below = 2pt
 
 [footer]
-base = header
+base = header_footer
+;border_top = $(thin_black_stroke)
+;padding_top = 4pt
 
 [footer chapter and number : 'footer' / ... / StyledText('chapter and number')]
 font_weight = bold
@@ -475,30 +740,260 @@ base = footer chapter and number
 [footer section title : 'footer' / ... / StyledText('section title')]
 base = footer chapter title
 
+;
+; (Sphinx) footnotes & citations
+;
 
-# footnotes & citations
+[footnote]
+location = footer
 
 [footnote marker]
-position=SUPERSCRIPT
-number_format=number
-
-[citation marker]
-label_prefix='['
-label_suffix=']'
-custom_label=True
+position = SUPERSCRIPT
+number_format = number
 
 [footnote paragraph]
-base=default
-font_size=8pt
-indent_first=0
-line_spacing=Fixed(10pt)
+base = default
+font_size = 8pt
+indent_first = 0
+line_spacing = Fixed(10pt)
 
 [footnote label]
-base=footnote paragraph
-text_align=RIGHT
+base = footnote paragraph
+text_align = right
 
+[citation]
+location = footer
 
-# title page
+[citation marker]
+label_prefix = '['
+label_suffix = ']'
+custom_label = true
+
+[citation paragraph]
+base = footnote paragraph
+
+[citation label]
+base = citation paragraph
+text_align = right
+
+;
+; (Sphinx) images & figures
+;
+
+[image]
+;space_above = 10pt
+padding = 2pt
+horizontal_align = center
+
+; sideways figures and tables
+[sideways float : Float(has_class='sideways')]
+base = NEXT_MATCH
+float = sideways
+
+[figure]
+space_above = 10pt
+space_below = 12pt
+
+[figure image]
+base = image
+keep_with_next = true
+
+[caption : Caption]
+base = default
+font_size = 9pt
+line_spacing = Fixed(10pt)
+indent_first = 0
+space_above = 4pt
+space_below = 0
+text_align = center
+label_suffix = ' '
+
+[figure caption]
+base = caption
+
+[figure legend]
+margin_left = 30pt
+
+[figure legend paragraph]
+base = caption
+space_above = 5pt
+text_align = left
+
+;
+; (Sphinx toctree) table of contents
+;
+
+[table of contents section]
+show_in_toc = false
+
+[table of contents]
+base = default
+typeface = $(sans_typeface)
+;font_width = condensed
+indent_first = 0
+depth = 2
+
+[reference in toc : 'table of contents' / ... / ReferenceField]
+
+[toc level 1]
+base = table of contents
+font_color = $(theme_color)
+;font_weight = bold
+font_size = 14pt
+space_above = 24pt
+space_below = 14pt
+margin_left = -2cm
+padding_bottom = 4mm
+border_bottom = 1mm,#15729d
+;text = '\t{PAGE}' (bold) '\tChapter {NUMBER} – {TITLE}'
+;tab_stops = 1cm right, 1.5cm
+text = '\t{NUMBER}' (bold) '\t{TITLE}\t{PAGE}'
+tab_stops = 1cm right, 1.5cm, 100% right
+
+[toc level 1 index : TableOfContentsEntry(depth = 1, target_is_of_type = 'IndexSection')]
+base = toc level 1
+text = '\t{PAGE}' (bold) '\t{TITLE}'
+
+[toc level 2]
+base = table of contents
+;margin_left = 18pt
+margin_left = -0.5cm
+space_above = 4pt
+;text = '\t{PAGE}' (bold) '\t{TITLE}'
+;tab_stops = 1cm right, 1.5cm
+text = '\t{NUMBER}' (bold) '\t{TITLE}\t{PAGE}'
+tab_stops = 1cm right, 1.5cm, 100% right
+;tab_stops = 1cm right, 1.5cm, 100% right '.  '
+
+[toc level 3]
+base = table of contents
+margin_left = 1.6cm
+tab_stops = 1.4cm, 100% right '.  '
+
+[L3 toc level 3]
+base = table of contents
+margin_left = 0
+tab_stops = 0.6cm, 100% right '. '
+
+[toc entry number reference field]
+base = linked reference
+quiet = true
+
+;
+; (Sphinx) list of figures & tables
+;
+
+[list of figures section]
+base = table of contents section
+
+[list of figures]
+base = table of contents
+
+[list of figures entry]
+base = list of figures
+tab_stops = 100% right '.  '
+
+[list of tables section]
+base = list of figures section
+
+[list of tables]
+base = list of figures
+
+[list of tables entry]
+base = list of figures entry
+
+;
+; (Sphinx) table
+;
+
+[table]
+space_above = 5pt
+space_below = 5pt
+repeat_head = true
+horizontal_align = center
+
+[table caption]
+base = caption
+keep_with_next = true
+
+[table cell]
+space_above = 2pt
+space_below = 2pt
+margin_left = 2pt
+margin_right = 2pt
+;vertical_align = middle
+vertical_align = top
+same_page = true
+padding_top = 6pt
+padding_bottom = 2pt
+
+[table head cell]
+base = table cell
+padding_top = 0
+padding_bottom = 0
+
+[table head cell background:TableCellBackground]
+fill_color = $(theme_color)
+
+[table head cell paragraph]
+base = default
+indent_first = 0
+margin_left = 3pt
+margin_right = 3pt
+typeface = $(sans_typeface)
+font_width = condensed
+font_weight = bold
+font_color = $(theme_inverted_color)
+text_align = center
+
+[table body cell paragraph]
+base = default
+indent_first = 0
+margin_left = 3pt
+margin_right = 3pt
+
+[table body cell list item number]
+base = table body cell paragraph
+indent_first = 0
+text_align = right
+
+[table first column paragraph]
+base = table body cell paragraph
+text_align = left
+
+[table top border]
+;stroke = $(thin_theme_stroke)
+stroke = $(slim_theme_stroke)
+
+[table bottom border]
+base = table top border
+
+[table head bottom border]
+base = table top border
+
+[table body top border]
+base = table head bottom border
+
+[table cell border:TableCellBorder]
+;stroke = $(thin_theme_stroke)
+;stroke = $(thin_white_stroke)
+stroke = none
+
+[table cell left border]
+base = table cell border
+
+[table cell top border]
+base = table cell border
+
+[table cell right border]
+base = table cell border
+
+[table cell bottom border]
+base = table cell border
+
+;
+; (Sphinx) title page
+;
 
 [title page rule]
 hide = true
@@ -515,61 +1010,305 @@ background_color = #e8e8e8
 border_top = 1mm,#15729d
 
 [title page title]
-typeface=$(sans_typeface)
-font_size=24pt
-text_align=right
-space_above=6pt
+typeface = $(sans_typeface)
+font_width = condensed
+font_size = 24pt
+text_align = right
+space_above = 6pt
 
 [title page subtitle]
-typeface=$(sans_typeface)
-font_size=14pt
-text_align=right
-space_above=6pt
+typeface = $(sans_typeface)
+font_width = condensed
+font_size = 14pt
+text_align = right
+space_above = 6pt
 
 [title page author]
-hide=true
-typeface=$(sans_typeface)
-font_weight=bold
-font_size=17pt
-text_align=right
-space_above=110pt
+hide = true
+typeface = $(sans_typeface)
+font_width = condensed
+;font_weight = bold
+font_size = 17pt
+text_align = right
+font_slant = italic
+space_above = 110pt
 
 [title page date]
-hide=true
-typeface=$(serif_typeface)
-font_size=12pt
-text_align=right
-space_above=220pt
+hide = true
+typeface = $(sans_typeface)
+font_width = condensed
+font_size = 12pt
+text_align = right
+font_slant = italic
+space_above = 220pt
 
-
-# index
+;
+; (Sphinx) index
+;
 
 [index]
 
 [index section label]
-typeface=$(sans_typeface)
-font_size=14pt
-space_above=10pt
-space_below=2pt
-keep_with_next=true
+typeface = $(sans_typeface)
+;font_width = condensed
+font_size = 14pt
+space_above = 10pt
+space_below = 2pt
+keep_with_next = true
 
 [level 1 index entry]
-base=default
-text_align=left
-margin_left=40pt
-indent_first=-40pt
+base = default
+text_align = left
+margin_left = 40pt
+indent_first = -40pt
 
 [level 2 index entry]
-base=level 1 index entry
-margin_left=60pt
-indent_first=-40pt
+base = level 1 index entry
+margin_left = 60pt
+indent_first = -40pt
 
 [level 3 index entry]
-base=level 1 index entry
-margin_left=80pt
-indent_first=-40pt
+base = level 1 index entry
+margin_left = 80pt
+indent_first = -40pt
 
 [level 4 index entry]
-base=level 1 index entry
-margin_left=100pt
-indent_first=-40pt
+base = level 1 index entry
+margin_left = 100pt
+indent_first = -40pt
+
+;
+; (Sphinx) chapter titles
+;
+
+[front matter section title]
+typeface = $(serif_typeface)
+font_size = 10pt
+text_align = right
+space_above = 1in
+border_top = $(thin_black_stroke)
+border_bottom = $(thin_black_stroke)
+padding_top = 8pt
+padding_bottom = 9pt
+
+[body matter chapter label]
+typeface = $(sans_typeface)
+font_size = 10pt
+font_weight = bold
+text_align = right
+
+[body matter chapter number]
+font_size = 14pt
+
+[body matter chapter title]
+typeface = $(sans_typeface)
+font_size = 14pt
+font_weight = bold
+text_align = right
+space_above = 0.83in
+border_top = $(thin_black_stroke)
+border_bottom = $(thin_black_stroke)
+padding_top = 18pt
+padding_bottom = 18pt
+
+;
+; (Sphinx) special RST classes
+;
+
+[sidecar-image : Flowable(has_class="sidecar")]
+base = default
+keep_with_next = true
+horizontal_align = right
+margin_right = -15mm
+space_above = -10mm
+width = 10mm
+
+[red-border-admonition : Admonition(has_class="red-border")]
+base = admonition
+border = $(thin_themerd_stroke)
+
+[red-thick-border-admonition : Admonition(has_class="red-thick-border")]
+base = admonition
+border = $(thick_themerd_stroke)
+
+[green-border-admonition : Admonition(has_class="green-border")]
+base = admonition
+border = $(thin_themegn_stroke)
+
+[green-thick-border-admonition : Admonition(has_class="green-thick-border")]
+base = admonition
+border = $(thick_themegn_stroke)
+
+; explicit page-breaks for their base styles, see also:
+; https://github.com/brechtm/rinohtype/issues/186#issuecomment-709001552
+; https://www.mos6581.org/rinohtype/master/stylesheets.html#element-style-classes
+
+[page-break-paragraph : Paragraph(has_class="page-break")]
+base = default
+page_break = any
+
+[page-break-admonition : Admonition(has_class="page-break")]
+base = admonition
+page_break = any
+
+[page-break-image : Image(has_class="page-break")]
+base = image
+page_break = any
+
+[page-break-horizontalrule : HorizontalRule(has_class="page-break")]
+base = horizontal rule
+page_break = any
+
+; customized roles
+
+[red-text : StyledText(has_class="red")]
+font_color = $(theme_color_red)
+
+[green-text : StyledText(has_class="green")]
+font_color = $(theme_color_green)
+
+[blue-text : StyledText(has_class="blue")]
+font_color = $(theme_color_blue)
+
+[cyan-text : StyledText(has_class="cyan")]
+font_color = $(theme_color_cyan)
+
+[yellow-text : StyledText(has_class="yellow")]
+font_color = $(theme_color_yellow)
+
+[black-text : StyledText(has_class="black")]
+font_color = $(color_black)
+
+[white-text : StyledText(has_class="white")]
+font_color = $(color_white)
+
+[italic-text : StyledText(has_class="italic")]
+base = italic
+
+[italic-red-text : StyledText(has_class="italic-red")]
+base = italic-text
+font_color = $(theme_color_red)
+
+[italic-green-text : StyledText(has_class="italic-green")]
+base = italic-text
+font_color = $(theme_color_green)
+
+[italic-blue-text : StyledText(has_class="italic-blue")]
+base = italic-text
+font_color = $(theme_color_blue)
+
+[italic-cyan-text : StyledText(has_class="italic-cyan")]
+base = italic-text
+font_color = $(theme_color_cyan)
+
+[italic-yellow-text : StyledText(has_class="italic-yellow")]
+base = italic-text
+font_color = $(theme_color_yellow)
+
+[italic-black-text : StyledText(has_class="italic-black")]
+base = italic-text
+font_color = $(color_black)
+
+[italic-white-text : StyledText(has_class="italic-white")]
+base = italic-text
+font_color = $(color_white)
+
+[bold-text : StyledText(has_class="bold")]
+base = bold
+
+[bold-red-text : StyledText(has_class="bold-red")]
+base = bold-text
+font_color = $(theme_color_red)
+
+[bold-green-text : StyledText(has_class="bold-green")]
+base = bold-text
+font_color = $(theme_color_green)
+
+[bold-blue-text : StyledText(has_class="bold-blue")]
+base = bold-text
+font_color = $(theme_color_blue)
+
+[bold-cyan-text : StyledText(has_class="bold-cyan")]
+base = bold-text
+font_color = $(theme_color_cyan)
+
+[bold-yellow-text : StyledText(has_class="bold-yellow")]
+base = bold-text
+font_color = $(theme_color_yellow)
+
+[bold-black-text : StyledText(has_class="bold-black")]
+base = bold-text
+font_color = $(color_black)
+
+[bold-white-text : StyledText(has_class="bold-white")]
+base = bold-text
+font_color = $(color_white)
+
+[underline-text : StyledText(has_class="underline")]
+; not yet supported: text_decoration = underline
+base = italic
+before = '__'
+after = '__'
+
+[underline-red-text : StyledText(has_class="underline-red")]
+base = underline-text
+font_color = $(theme_color_red)
+
+[underline-green-text : StyledText(has_class="underline-green")]
+base = underline-text
+font_color = $(theme_color_green)
+
+[underline-blue-text : StyledText(has_class="underline-blue")]
+base = underline-text
+font_color = $(theme_color_blue)
+
+[underline-cyan-text : StyledText(has_class="underline-cyan")]
+base = underline-text
+font_color = $(theme_color_cyan)
+
+[underline-yellow-text : StyledText(has_class="underline-yellow")]
+base = underline-text
+font_color = $(theme_color_yellow)
+
+[underline-black-text : StyledText(has_class="underline-black")]
+base = underline-text
+font_color = $(color_black)
+
+[underline-white-text : StyledText(has_class="underline-white")]
+base = underline-text
+font_color = $(color_white)
+
+[strikethrough-text : StyledText(has_class="strikethrough")]
+; not yet supported: text_decoration = line-through
+base = italic
+font_size = 6pt
+before = ' ('
+after = ') '
+
+[strikethrough-red-text : StyledText(has_class="strikethrough-red")]
+base = strikethrough-text
+font_color = $(theme_color_red)
+
+[strikethrough-green-text : StyledText(has_class="strikethrough-green")]
+base = strikethrough-text
+font_color = $(theme_color_green)
+
+[strikethrough-blue-text : StyledText(has_class="strikethrough-blue")]
+base = strikethrough-text
+font_color = $(theme_color_blue)
+
+[strikethrough-cyan-text : StyledText(has_class="strikethrough-cyan")]
+base = strikethrough-text
+font_color = $(theme_color_cyan)
+
+[strikethrough-yellow-text : StyledText(has_class="strikethrough-yellow")]
+base = strikethrough-text
+font_color = $(theme_color_yellow)
+
+[strikethrough-black-text : StyledText(has_class="strikethrough-black")]
+base = strikethrough-text
+font_color = $(color_black)
+
+[strikethrough-white-text : StyledText(has_class="strikethrough-white")]
+base = strikethrough-text
+font_color = $(color_white)

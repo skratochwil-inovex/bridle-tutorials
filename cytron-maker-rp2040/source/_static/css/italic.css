@@ -1,0 +1,38 @@
+span.italic {
+  font-style: italic;
+}
+
+span.italic-red {
+  font-style: italic;
+  color: var(--docset-color-theme-red);
+}
+
+span.italic-green {
+  font-style: italic;
+  color: var(--docset-color-theme-green);
+}
+
+span.italic-blue {
+  font-style: italic;
+  color: var(--docset-color-theme-blue);
+}
+
+span.italic-cyan {
+  font-style: italic;
+  color: var(--docset-color-theme-cyan);
+}
+
+span.italic-yellow {
+  font-style: italic;
+  color: var(--docset-color-theme-yellow);
+}
+
+span.italic-black {
+  font-style: italic;
+  color: var(--docset-color-black);
+}
+
+span.italic-white {
+  font-style: italic;
+  color: var(--docset-color-white);
+}

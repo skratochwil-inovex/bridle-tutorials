@@ -1,7 +1,17 @@
+;
+; Document Template for Bridle [EN]
+;
+; https://www.mos6581.org/rinohtype/master/basicstyling.html#document-templates
+;
+; RinohType provides a number of Standard Document Templates:
+;
+; https://www.mos6581.org/rinohtype/master/stdtemplates.html#standard-templates
+;
+
 [TEMPLATE_CONFIGURATION]
 name = bridle
+description = RinohType Template for Bridle Books [EN]
 template = book
-description =
 
 parts =
     title
@@ -9,32 +19,29 @@ parts =
     contents
     back_matter
 stylesheet = bridle.rts
-
+language = en
 
 [SectionTitles]
-contents='Contents'
-
+contents = 'Contents'
 
 [VARIABLES]
 paper_size = A4
 
-
 [title]
-page_number_format=number
-end_at_page=left
+page_number_format = number
+end_at_page = left
 
 [front_matter]
-page_number_format=continue
-end_at_page=any
+page_number_format = continue
+end_at_page = any
 
 [contents]
-page_number_format=continue
-end_at_page=any
+page_number_format = continue
+end_at_page = any
 
 [back_matter]
-page_number_format=continue
-end_at_page=any
-
+page_number_format = continue
+end_at_page = any
 
 [title_page]
 top_margin = 8cm
@@ -42,14 +49,12 @@ top_margin = 8cm
 [front_matter_right_page]
 left_margin = 4cm
 right_margin = 2cm
-
 chapter_title_flowables =
     Paragraph([Field(SECTION_TITLE(1)),
                Tab(),
-               Field(SECTION_NUMBER(1), style='number')],
-              style='chapter title'),
+               Field(SECTION_NUMBER(1), style = 'number')],
+              style = 'chapter title'),
 chapter_title_height = 6cm
-
 header_text = none
 footer_text = '\t'
               '{SECTION_NUMBER(2)}' (section number)
@@ -61,7 +66,7 @@ chapter_footer_text = '\t\t{PAGE_NUMBER}'
 header_footer_distance = 34pt
 
 [front_matter_left_page]
-base=front_matter_right_page
+base = front_matter_right_page
 footer_text = '{PAGE_NUMBER}'
               '\t'
               '{SECTION_NUMBER(1)}' (chapter and number)
@@ -69,10 +74,10 @@ footer_text = '{PAGE_NUMBER}'
               '{SECTION_TITLE(1)}' (chapter title)
 
 [contents_right_page]
-base=front_matter_right_page
+base = front_matter_right_page
 
 [contents_left_page]
-base=front_matter_left_page
+base = front_matter_left_page
 footer_text = '{PAGE_NUMBER}'
               '\t'
               'Chapter {SECTION_NUMBER(1)}' (chapter and number)
@@ -80,7 +85,7 @@ footer_text = '{PAGE_NUMBER}'
               '{SECTION_TITLE(1)}' (chapter title)
 
 [back_matter_right_page]
-base=front_matter_right_page
+base = front_matter_right_page
 
 [back_matter_left_page]
-base=front_matter_left_page
+base = front_matter_left_page

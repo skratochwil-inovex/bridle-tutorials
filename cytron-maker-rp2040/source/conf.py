@@ -108,7 +108,6 @@ needs_extensions = {
 }
 
 extensions = [
-    'sphinx.ext.intersphinx',
     'sphinx.ext.extlinks',
     'sphinx.ext.ifconfig',
     'sphinx.ext.intersphinx',
@@ -122,6 +121,7 @@ exclude_patterns = []
 language = 'de'
 
 rst_prolog = '''
+.. include:: /roles.txt
 .. |docsrc| replace:: {docsrc}
 .. |docstat| replace:: {docstat}
 .. |docnumb| replace:: {docnumb}
@@ -147,11 +147,10 @@ rst_prolog = '''
     docstat = docstat,
     docnumb = docnumb,
     genvers = genvers,
-    version = version,
     identify = identify,
-    release = release,
     title = title,
     subtitle = subtitle,
+    publisher = publisher,
     copyright = copyright,
     project = project,
     author = author,
@@ -159,11 +158,21 @@ rst_prolog = '''
     contactaddr = contactaddr,
     contactemail = contactemail,
     contactweb = contactweb,
-    publisher = publisher,
-    subject = about,
-    keywords = keywords,
     gxp_name = gxp_name,
+    keywords = keywords,
 )
+
+rst_epilog = '''
+.. include:: /unicode.txt
+'''.format()
+
+numfig = True
+numfig_format = {
+    'code-block': 'Listing %s',
+    'sections': 'Abschnitt %s',
+    'figure': 'Abbildung %s',
+    'table': 'Tabelle %s',
+}
 
 # -- Options for PDF output --------------------------------------------------
 # https://www.mos6581.org/rinohtype/master/quickstart.html#sphinx-quickstart
@@ -171,7 +180,7 @@ rst_prolog = '''
 rinoh_documents = [
     dict(doc = 'index', target = basename,
          title = project, author = author,
-         template = '_styles/rinohtype/bridle.rtt',
+         template = '_styles/rinohtype/bridle-book-de.rtt',
          logo = '_static/images/bridle_text.pdf',
     ),
 ]
@@ -185,6 +194,17 @@ html_logo = '_static/images/bridle.svg'
 
 html_theme = 'sphinx_immaterial'
 html_static_path = ['_static']
+html_css_files = [
+    'css/common.css',
+    'css/colors.css',
+    'css/bold.css',
+    'css/strikethrough.css',
+    'css/underline.css',
+    'css/italic.css',
+    'css/hwftlbl.css',
+    'css/rpipico.css',
+    'css/tweaks-sphinx_immaterial_theme.css',
+]
 html_theme_options = {
     "icon": {
         "repo": "fontawesome/brands/github",
@@ -234,11 +254,24 @@ html_theme_options = {
     ],
 }
 
+# -- Options for extlinks extension ------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html#configuration
+
+extlinks_detect_hardcoded_links = True
+extlinks = {
+    'wiki': ('https://de.wikipedia.org/wiki/%s', '[Wiki: %s]'),
+    'bridle': ('https://bridle.tiac-systems.net/doc/latest/bridle/%s', '[Bridle: %s]'),
+    'zephyr': ('https://bridle.tiac-systems.net/doc/latest/zephyr/%s', '[Zephyr: %s]'),
+    'zephyr-us': ('https://docs.zephyrproject.org/latest/%s', '[Zephyr (upstream): %s]'),
+}
+
 # -- Options for intersphinx extension ---------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html#configuration
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None),
+    'bridle': ('https://bridle.tiac-systems.net/doc/latest/bridle', None),
+    'zephyr': ('https://bridle.tiac-systems.net/doc/latest/zephyr', None),
+    'zephyr-us': ('https://docs.zephyrproject.org/latest', None),
 }
 
 # -- Options for todo extension ----------------------------------------------

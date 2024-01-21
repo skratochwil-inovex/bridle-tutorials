@@ -1,0 +1,37 @@
+span.strikethrough {
+  text-decoration: line-through;
+}
+
+span.strikethrough-red {
+  text-decoration: line-through;
+  color: var(--docset-color-theme-red);
+}
+
+span.strikethrough-green {
+  text-decoration: line-through;
+  color: var(--docset-color-theme-green);
+}
+
+span.strikethrough-blue {
+  text-decoration: line-through;
+  color: var(--docset-color-theme-blue);
+}
+span.strikethrough-cyan {
+  text-decoration: line-through;
+  color: var(--docset-color-theme-cyan);
+}
+
+span.strikethrough-yellow {
+  text-decoration: line-through;
+  color: var(--docset-color-theme-yellow);
+}
+
+span.strikethrough-black {
+  text-decoration: line-through;
+  color: var(--docset-color-black);
+}
+
+span.strikethrough-white {
+  text-decoration: line-through;
+  color: var(--docset-color-white);
+}

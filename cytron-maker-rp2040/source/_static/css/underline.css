@@ -1,0 +1,37 @@
+span.underline {
+  text-decoration: underline;
+}
+
+span.underline-red {
+  text-decoration: underline;
+  color: var(--docset-color-theme-red);
+}
+
+span.underline-green {
+  text-decoration: underline;
+  color: var(--docset-color-theme-green);
+}
+
+span.underline-blue {
+  text-decoration: underline;
+  color: var(--docset-color-theme-blue);
+}
+span.underline-cyan {
+  text-decoration: underline;
+  color: var(--docset-color-theme-cyan);
+}
+
+span.underline-yellow {
+  text-decoration: underline;
+  color: var(--docset-color-theme-yellow);
+}
+
+span.underline-black {
+  text-decoration: underline;
+  color: var(--docset-color-black);
+}
+
+span.underline-white {
+  text-decoration: underline;
+  color: var(--docset-color-white);
+}
