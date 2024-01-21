@@ -13,6 +13,7 @@ gitpython = "^3"
 sphinx = "^7"
 sphinx-immaterial = "^0"
 rinohtype = "^0"
+rinoh-typeface-dejavuserif = "^0"
 
 
 [tool.poetry.group.dev.dependencies]
