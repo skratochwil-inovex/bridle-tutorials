@@ -1,4 +1,34 @@
+.. _gs-hw-components:
+
 Hardwarekomponenten
 ###################
 
-.. todo:: Was ist in der Kiste?
+.. include:: inventory.rsti
+
+.. _gs-rpi-debug-probe:
+
+Raspberry Pi – Debug Probe
+**************************
+
+.. toctree::
+   :caption: Raspberry Pi – Debug Probe
+   :maxdepth: 1
+   :glob:
+
+   raspberry-pi-debug-probe/positions
+   raspberry-pi-debug-probe/pinouts
+   raspberry-pi-debug-probe/references
+
+.. _gs-cytron-maker-pi-rp2040:
+
+Cytron – Maker Pi RP2040
+************************
+
+.. toctree::
+   :caption: Cytron – Maker Pi RP2040:
+   :maxdepth: 1
+   :glob:
+
+   cytron-maker-pi-rp2040/positions
+   cytron-maker-pi-rp2040/pinouts
+   cytron-maker-pi-rp2040/references

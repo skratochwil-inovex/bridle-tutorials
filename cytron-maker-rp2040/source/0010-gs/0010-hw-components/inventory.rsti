@@ -1,0 +1,238 @@
+.. list-table:: Inventurliste – Hardwarekomponenten in der Box
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 70, 10
+   :header-rows: 1
+
+   * -
+     -
+     - Anzahl
+
+   * - .. rubric:: ➀
+     - .. rubric:: Kernkomponenten
+     -
+
+   * - .. image:: /_images/baskets/cytron-maker-pi-rp2040.*
+          :align: center
+     - :Cytron – Maker Pi RP2040:
+
+          | **1x** Maker Pi RP2040 (MCU-Board)
+          | **4x** 4-poliges Grove Kabel auf 100mil DuPont, 20cm
+          | **1x** kleiner Schreibendreher (Kreuzschlitz)
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/raspberry-pi-debug-probe.*
+          :align: center
+     - :Raspberry Pi – Debug Probe:
+
+          | **1x** Raspberry Pi – Debug Probe (USB-Debugger)
+          | **1x** 3-poliges JST/SH Kabel (SWD Direktanschluss)
+          | **2x** 3-poliges JST/SH Kabel auf 100mil DuPont
+
+          .. | **1x** 1m USB Kabel, USB-A zu microUSB
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/red4power-r4-u007b-with-cable.*
+          :align: center
+     - :RED4P⏻WER – USB 2.0 Hub mit Kabeln:
+
+          | **1x** 4-fach USB 2.0 Hub mit USB-A Verlängerung
+          | **1x** 20cm USB-A zu microUSB, rot (USB-Debugger)
+          | **1x** 20cm USB-A zu microUSB, grün (MCU-Board)
+
+     - .. rubric:: 1x
+
+   * - .. rubric:: ➁
+     - .. rubric:: Digitale und analoge Module
+     -
+
+   * - .. image:: /_images/baskets/seeed-grove-led.*
+          :align: center
+     - :Seeed Studio – Grove - LED:
+
+          | 5mm LED-Lichtquelle mit Potentiometer als
+          | Vorwiderstand, für PWM Signale geeignet.
+
+          | Betriebsspannung: (3,3V) 5V
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/seeed-grove-button.*
+          :align: center
+     - :Seeed Studio – Grove - Button:
+
+          | Taktiler Mikro-Taster mit Pull-Down-Widerstand,
+          | entprellt und Überspannungsschutz.
+
+          | Betriebsspannung: 3,3V / 5V
+          | Lebensdauer: 200.000 Zyklen
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/seeed-grove-rotary-angle-sensor.*
+          :align: center
+     - :Seeed Studio – Grove - Potentiometer:
+
+          | Lineares Drehpotentiometer mit einem
+          | Mittenabgriff als Signal, for ADC geeignet.
+
+          | Betriebsspannung: 3,3V / 5V
+          | Widerstand: 10 kΩ
+          | Drehbereich: 300°
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/seeed-grove-ntc-temperature-sensor.*
+          :align: center
+     - :Seeed Studio – Grove - Temperature Sensor V1.2:
+
+          | Analoger Sensor zum Messen der Umgebungs-
+          | temperatur mit einem Thermistor (NTC).
+
+          | Betriebsspannung: 3,3V / 5V
+          | Widerstand: 100 kΩ ±1% (NCP18WF104F03RC)
+          | Temperaturmessgenauigkeit: ±1,5 °C
+          | Arbeitstemperatur: -40 °C bis 125 °C
+
+     - .. rubric:: 1x
+
+   * - .. rubric:: ➂
+     - .. rubric:: I²C Module
+     -
+
+   * - .. image:: /_images/baskets/seeed-grove-bmp280-barometer-sensor.*
+          :align: center
+     - :Seeed Studio – Grove - Barometer Sensor BMP280:
+
+          | I²C Sensor zum Messen von atmosphärischem
+          | Druck (300-1100 hPa) und Umgebungstemperatur.
+
+          | Betriebsspannung: 3,3V / 5V
+          | Druckmessgenauigkeit: ±1,0 hPa
+          | Temperaturmessgenauigkeit: ±1,0 °C
+          | Arbeitstemperatur: -40 °C bis 85 °C
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/seeed-grove-aht20-temperature-humidity-sensor.*
+          :align: center
+     - :Seeed Studio – Grove - T/RH Sensor AHT20:
+
+          | I²C Sensor zum Messen von Umgebungstemperatur
+          | und relativer Luftfeuchtigkeit (0-100% RH).
+
+          | Betriebsspannung: 3,3V / 5V
+          | Temperaturmessgenauigkeit: ±0,3 °C
+          | Feuchtigkeitsmessgenauigkeit: ±2% RH (25 °C)
+          | Arbeitstemperatur: -40 °C bis 85 °C
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/aliexpress-noname-aht20-bmp280.*
+          :align: center
+     - :Ali Express – Noname - Sensor AHT20+BMP280:
+
+          | I²C Sensor zum Messen von Umgebungstemperatur,
+          | relativer Luftfeuchtigkeit (0-100% RH) und atmo-
+          | sphärischem Druck (300-1100 hPa).
+
+          | Betriebsspannung: 3,3V / 5V
+          | Druckmessgenauigkeit: ±1,0 hPa
+          | Temperaturmessgenauigkeit: ±0,3 °C
+          | Feuchtigkeitsmessgenauigkeit: ±2% RH (25 °C)
+          | Arbeitstemperatur: -40 °C bis 85 °C
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/seeed-grove-i2c-hub6.*
+          :align: center
+     - :Seeed Studio – Grove - I²C Hub (6 Port):
+
+          | I²C Bus Splitter mit 6 Anschlüssen für 5
+          | zusätzliche Grove I²C Module.
+
+          | Betriebsspannung: 3,3V / 5V
+          | Multiplexing: passiv
+
+       .. only:: rinoh
+
+          | |nbsp|
+          | |nbsp|
+          | |nbsp|
+          | |nbsp|
+          | |nbsp|
+          | |nbsp|
+
+     - .. rubric:: 1x
+
+   * - .. rubric:: ➃
+     - .. rubric:: Motoren
+     -
+
+   * - .. image:: /_images/baskets/towerpro-sg90.*
+          :align: center
+     - :Tower Pro – SG90 Micro Servo 180°:
+
+          | 4,8V Miniaturservomotor für 180°
+          | Winkelpositionierung (±90° Anschlag)
+
+          | Drehmoment: 1,8 kgf × cm (0,18 Nm)
+          | Geschwindigkeit: 0,1 Sek. / 60° (100 U/min)
+          | Pulsweite: 500-2500 µs
+
+     - .. rubric:: 2x
+
+   * - .. image:: /_images/baskets/feetech-fs90r.*
+          :align: center
+     - :Feetech – FS90R Micro Servo 360°:
+
+          | 4,8V-6V Miniaturservomotor für 360°
+          | Rotationsgeschwindigkeit (kein Anschlag)
+
+          | Drehmoment: 1,5 kgf × cm (0,14 Nm)
+          | Geschwindigkeit: 0,1 Sek. / 60° (100 U/min)
+          | Pulsweite: 900-2100 µs
+
+     - .. rubric:: 2x
+
+   * - .. image:: /_images/baskets/johnson-dc-10435.*
+          :align: center
+     - :JOHNSON – 10435 Miniatur DC Motor:
+
+          | 3,0V-13V Miniaturgleichstrommotor
+
+          | Drehmoment: 40,95 kgf × cm (4,016 Nm)
+          | Geschwindigkeit (leer/maximal): 4460/2230 U/min
+          | Stromaufnahme: max. 0,123 A
+          | Leistung: max. 0,469 W
+
+     - .. rubric:: 2x
+
+   * - .. rubric:: ➄
+     - .. rubric:: Stromversorgung
+     -
+
+   * - .. image:: /_images/baskets/goobay-11473.*
+          :align: center
+     - :Goobay 11473 – 4x AA/LR6 (Mignon) Batteriehalter:
+
+          | 15cm Anschlusskabel und Schalter
+          | geschlossenes Gehäuse, wasserabweisend
+
+          | **4x** Mignon AA/LR6 **Alkalibatterien eingebaut**
+
+     - .. rubric:: 1x
+
+   * - .. image:: /_images/baskets/evanto-l2769.*
+          :align: center
+     - :Evanto L2769 – 4x AA/AAA Batteriebehälter:
+
+          | Transport- und Aufbewahrungsbehälter für
+          | Mignon (AA) oder Micro (AAA) Ersatzbatterien
+
+          | **4x** Mignon AA/LR6 **Alkalibatterien enthalten**
+
+     - .. rubric:: 1x
