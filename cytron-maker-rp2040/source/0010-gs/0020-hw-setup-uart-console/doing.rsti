@@ -1,0 +1,146 @@
+.. rubric:: Durchführung
+
+#. Suche dir alle notwendigen Hardwarekomponenten aus der Box zusammen.
+
+#. Beginne mit der Verbindung des **USB Debug-Adapters** über den **USB Hub**
+   und dem **orangenen USB Kabel** an deinem **Host-PC**.
+
+#. Finde heraus, ob du prinzipiell mit deinem **Terminalemulator** die neue
+   **serielle Schnittstelle** des USB Debug-Adapters **auswählen und öffnen**
+   kannst.
+
+   Die folgenden drei Abbildungen zeigen das beispielhaft mit *Tabby* als
+   Terminalemulator unter Windows 11 und der durch Windows vergebenen ``COM3``
+   für die **UART am USB Debug-Adapter** in drei Schritten: (1) im Windows
+   Device Manager wurde die UART erkannt und zugeordnet; (2) in Tabby kann das
+   zugeordnete Gerät gesucht, gefunden und ausgewählt werden; (3) beim Öffnen
+   des ausgewählten Geräts in Tabby wird die Baud Rate auf 115200 eingestellt.
+
+   .. list-table::
+      :align: center
+      :width: 80%
+      :widths: 30, 30, 30
+
+      * - .. image:: /_images/tabby/w11-rpi-dbgprobe-connected.*
+             :align: center
+        - .. image:: /_images/tabby/w11-rpi-dbgprobe-uart-console-open.*
+             :align: center
+        - .. image:: /_images/tabby/w11-rpi-dbgprobe-uart-console-select-baud.*
+             :align: center
+
+#. Fahre mit den beiden kleinen Flachbandkabeln fort. Stelle die **Verbindung**
+   zwischen dem **USB Debug-Adapter und dem MCU-Board** laut Abbildung her.
+   Achte darauf, dass die beiden Leitungen ``RxD/TxD`` aus Richtung MCU-Board
+   und USB Debug-Adapter jeweils **miteinander gekreuzt** angeschlossen sind.
+   Das ist ein **Null-Modem** und stellt die grundlegende Verschaltung zwischen
+   zwei Kommunikationspartnern über eine V.24/RS232 dar.
+
+#. Stecke nun des eine Ende mit dem **kleineren Stecker** (JST/SH) in die **mit
+   "U" gekennzeichnete Buchse am USB Debug-Adapter** und das andere Ende mit dem
+   **größeren Stecker** (Grove System Connector) in die **mit "GROVE 1"
+   gekennzeichnete Buchse am MCU-Board**.
+
+#. **Verbinde** zum Schluss das **MCU-Board** über den **USB Hub** und dem
+   **günen USB Kabel** mit deinem **Host-PC**. Achte darauf, dass am MCU-Board
+   der **Stromversorgungsschalter** auf der Position **"OFF"** steht
+   (der Schiebeschalter oberhalb der USB-Buchse).
+
+   .. figure:: /_images/doing/cytron-maker-pi-rp2040-power.*
+      :name: cytron-maker-pi-rp2040-power
+
+      Stromversorgungsschalter auf dem *Cytron – Maker Pi RP2040*
+
+#. Bringe deine bereits laufende **Sitzung im Terminalemulator** in den
+   Vordergrund und schiebe dann den **Stromversorgungsschalter** am MCU-Board
+   auf die Position **"ON"**. Nun muss folgende Ausgabe im Terminalemulator
+   zu sehen sein::
+
+      MicroPython v1.23.0-preview … … …; Raspberry Pi Pico with RP2040
+      Type "help()" for more information.
+      >>> _
+
+   Die folgende Abbildung zeigt das Ergebnis ebenso beispielhaft mit *Tabby* als
+   Terminalemulator unter Windows 11.
+
+   .. list-table::
+      :align: center
+      :width: 80%
+
+      * - .. image:: /_images/tabby/w11-rpi-dbgprobe-uart-console-io-working.*
+             :align: center
+
+#. Ja, in der Tat. Das ist Python! **Tippe doch einfach mal** ``help()`` **ein**,
+   um zu überprüfen, dass dein Terminalemulator mit dem USB Debug-Adapter auch
+   wirklich in beide Richtungen funktioniert und du nicht eventuell in deinem
+   Aufbau eine Leitung vergessen oder falsch verbunden hast. Du musst etwas wie
+   ``Welcome to MicroPython!`` zurückbekommen.
+
+.. rubric:: Zugabe
+
+Auch wenn wir uns hier (noch) nicht mit Python unter Zephyr beschäftigen, kannst
+du gerne die folgenden kleinen Beispiele direkt **in die MicroPython Console
+kopieren** und sehen, was passiert. Bitte auch immer auf das letzte :kbd:`ENTER`
+achten. Laufende Python Scripte können ganz einfach mit :kbd:`Ctrl-C` beendet
+werden.
+
+:Say Hello:
+
+   .. code-block:: Python
+
+      print("Hello")
+
+:Die letzte freie LED ein-/ausschalten:
+
+   .. code-block:: Python
+
+      from machine import Pin
+      led = Pin(28, Pin.OUT)
+      led.value(1)
+
+   .. code-block:: Python
+
+      led.value(0)
+
+.. :Die letzte freie LED blinken lassen:
+
+   .. code-block:: Python
+
+      import machine
+      import time
+
+      # setup the first LED as an output signal
+      first_led = machine.Pin(28, machine.Pin.OUT)
+
+      while True:
+          first_led.toggle()
+          time.sleep(1)
+
+.. :Alle 11 freien LEDs benutzen:
+
+   .. code-block:: Python
+
+      import machine
+      import time
+
+      # The Maker Pi RP2040 has 11 fantastic blue GPIO status LEDs
+      blue_led_pins = [2,3,4,5,6,7,16,17,26,27,28]
+      number_leds = len(blue_led_pins)
+      led_ports = []
+      delay = .0125
+
+      # create a list of the ports
+      for i in range(number_leds):
+         led_ports.append(machine.Pin(blue_led_pins[i], machine.Pin.OUT))
+
+      # loop forever
+      while True:
+          # blue up
+          for i in range(0, number_leds):
+              led_ports[i].high()
+              time.sleep(delay)
+              led_ports[i].low()
+          # blue down
+          for i in range(number_leds - 1, 0, -1):
+              led_ports[i].high()
+              time.sleep(delay)
+              led_ports[i].low()

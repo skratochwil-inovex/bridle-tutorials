@@ -1,0 +1,27 @@
+Flash Resetting UF2
+===================
+
+If your Pico ever gets into a really weird state and doesn't even show up
+as a disk drive when installing CircuitPython, try installing this 'nuke'
+UF2 which will do a 'deep clean' on your Flash Memory. You will lose all
+the files on the board, but at least you'll be able to revive it!
+
+After nuking, re-install CircuitPython
+
+--> flash_nuke.uf2
+    --> https://cdn-learn.adafruit.com/assets/assets/000/099/419/original/flash_nuke.uf2
+    --> https://github.com/raspberrypi/pico-examples/tree/master/flash/nuke
+______________________________________________________________________________
+https://learn.adafruit.com/intro-to-rp2040-pio-with-circuitpython/installing-circuitpython#flash-resetting-uf2-3083182
+
+
+MicroPthon REPL v1.22.1 (2024-01-05) for Raspberry Pi Pico (also Maker Pi)
+==========================================================================
+
+This is the latest patch but stable release of MicroPthon REPL that will work
+with the Maker Pi RP2040.
+
+--> https://micropython.org/resources/firmware/RPI_PICO-20240105-v1.22.1.uf2
+--> https://github.com/CytronTechnologies/MAKER-PI-RP2040/tree/main/Examples/MicroPython
+______________________________________________________________________________
+https://micropython.org/download/RPI_PICO

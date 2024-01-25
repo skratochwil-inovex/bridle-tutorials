@@ -1,0 +1,65 @@
+.. admonition:: Zeit für deine Notizen, Fragen und Anregungen
+   :class: question page-break
+   :collapsible: open
+
+   .. only:: rinoh
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+   *z.B.: Warum sind* ``GP0`` *und* ``GP1`` *jeweils* ``TxD`` *und* ``RxD``
+   *der ersten seriellen Schnittstelle (*\ ``UART0``\ *) und nicht einfache
+   General Purpose In-/Outputs (GPIO) der MCU?*
