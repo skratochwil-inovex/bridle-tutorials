@@ -1,0 +1,29 @@
+<svg width="123pt" height="29.492pt" version="1.2" viewBox="0 0 123 29.492" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<clipPath id="a">
+<path d="m0 0h123v28.773h-123z"/>
+</clipPath>
+</defs>
+<g clip-path="url(#a)" fill="none" stroke-miterlimit="10" stroke-width="4">
+<path transform="matrix(.7193 0 0 -.7193 0 27.333)" d="m19.002 12.997h55.849l20.3 12.002h55.849" stroke="#303030"/>
+<path transform="matrix(.7193 0 0 -.7193 0 27.333)" d="m19.002 17h55.849l20.3 4.0024h55.849" stroke="#ff0000"/>
+<path transform="matrix(.7193 0 0 -.7193 0 27.333)" d="m19.002 21.002h55.849l20.3-4.0024h55.849" stroke="#e6e6e6"/>
+<path transform="matrix(.7193 0 0 -.7193 0 27.333)" d="m19.002 24.999h55.849l20.3-12.002h55.849" stroke="#ffff00"/>
+</g>
+<g stroke="#303030">
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m19 7.999h6.0009v24.003h-6.0009" fill="#ffffff" stroke-miterlimit="10"/>
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m.99771 5.0012h18.003v29.999h-18.003z" fill="#e6e6e6"/>
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m.99771 6.5001h18.003" fill="none" stroke-miterlimit="10"/>
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m.99771 33.501h18.003" fill="none" stroke-miterlimit="10"/>
+</g>
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m.99771 12.501h21v14.999h-21z" fill="#cacaca" stroke="#979797"/>
+<path transform="matrix(-.7193 0 0 .7193 19.061 .35965)" d="m6.9986 12.501v6.0009h10.503v2.9977h-10.503v6.0009" fill="none" stroke="#979797" stroke-miterlimit="10"/>
+<g stroke="#303030">
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m163 6.9997h6.0009v23.998h-6.0009" fill="#ffffff" stroke-miterlimit="10"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m145 4.002h18.003v29.999h-18.003z" fill="#e6e6e6"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m145 5.5009h18.003" fill="none" stroke-miterlimit="10"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m145 32.502h18.003" fill="none" stroke-miterlimit="10"/>
+</g>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m145 11.502h21v14.999h-21z" fill="#cacaca" stroke="#979797"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m151 11.502v6.0009h10.503v2.9977h-10.503v6.0009" fill="none" stroke="#979797" stroke-miterlimit="10"/>
+</svg>

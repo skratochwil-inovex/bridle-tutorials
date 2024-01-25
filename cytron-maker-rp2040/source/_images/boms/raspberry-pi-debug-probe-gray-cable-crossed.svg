@@ -1,0 +1,29 @@
+<svg width="123pt" height="20.859pt" version="1.2" viewBox="0 0 123 20.859" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<clipPath id="b">
+<path d="m0 0h123v19.422h-123z"/>
+</clipPath>
+<clipPath id="a">
+<path d="m0 0h123v19.422h-123z"/>
+</clipPath>
+</defs>
+<g clip-path="url(#b)">
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m19.001 9.9974h55.849l20.3 6.0009h55.849" fill="none" stroke="#ff0000" stroke-miterlimit="10" stroke-width="3"/>
+</g>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m19.001 13.001h132" fill="none" stroke="#b3b3b3" stroke-miterlimit="10" stroke-width="3"/>
+<g clip-path="url(#a)">
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m19.001 15.998h55.849l20.3-6.0009h55.849" fill="none" stroke="#b3b3b3" stroke-miterlimit="10" stroke-width="3"/>
+</g>
+<g stroke="#303030">
+<path transform="matrix(-.7193 0 0 .7193 16.184 .35965)" d="m5.0025 4.431h10.286v1.7107h-10.286z" fill="#cacaca"/>
+<path transform="matrix(-.7193 0 0 .7193 16.184 .35965)" d="m5.0025 19.859h10.286v1.7107h-10.286z" fill="#cacaca"/>
+<path transform="matrix(-.7193 0 0 .7193 16.184 .35965)" d="m5.0025 6.1417h15.428v13.707h-15.428z" fill="#e6e6e6"/>
+</g>
+<g fill="#cacaca" stroke="#303030">
+<path transform="matrix(-.7193 0 0 .7193 16.184 .35965)" d="m1.5703.99886h3.4322v3.4322h3.4267v3.4267h-3.4267v2.0528h3.4267v2.0582h-3.4267v2.0636h3.4267v2.0582h-3.4267v2.0474h3.4267v3.4322h-3.4267v3.4322h-3.4322v-24.003" stroke-miterlimit="10"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m153 4.431h10.286v1.7107h-10.286z"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m153 19.859h10.286v1.7107h-10.286z"/>
+</g>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m153 6.1417h15.428v13.707h-15.428z" fill="#e6e6e6" stroke="#303030"/>
+<path transform="matrix(.7193 0 0 .7193 .35965 .35965)" d="m149.57.99886h3.4322v3.4322h3.4267v3.4267h-3.4267v2.0528h3.4267v2.0582h-3.4267v2.0636h3.4267v2.0582h-3.4267v2.0474h3.4267v3.4322h-3.4267v3.4322h-3.4322v-24.003" fill="#cacaca" stroke="#303030" stroke-miterlimit="10"/>
+</svg>
