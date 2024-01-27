@@ -25,3 +25,15 @@ with the Maker Pi RP2040.
 --> https://github.com/CytronTechnologies/MAKER-PI-RP2040/tree/main/Examples/MicroPython
 ______________________________________________________________________________
 https://micropython.org/download/RPI_PICO
+
+
+CircuitPython 8.2.9 for Maker Pi RP2040 by Cytron Technologies
+==============================================================
+
+This is the latest stable release of CircuitPython that will work with
+the Maker Pi RP2040.
+
+--> https://downloads.circuitpython.org/bin/cytron_maker_pi_rp2040/en_US/adafruit-circuitpython-cytron_maker_pi_rp2040-en_US-8.2.9.uf2
+--> https://github.com/CytronTechnologies/MAKER-PI-RP2040/tree/main/Examples/CircuitPython/Out-of-the-box%20Demo%20Code
+______________________________________________________________________________
+https://circuitpython.org/board/cytron_maker_pi_rp2040
