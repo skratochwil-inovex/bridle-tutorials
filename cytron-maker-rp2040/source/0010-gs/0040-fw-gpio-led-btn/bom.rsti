@@ -1,0 +1,30 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`der ersten Übung <gs-setup-uart-console>`.
+
+   * - **Software:**
+     - Du benötigst eine unserer virtuellen VS Code Instanzen mit
+       einem West Workspace.
+
+   * - *VS Code Instanzen*
+     - **Zugangsdaten aus E-Mail**
+
+       | Anmeldung über: https://coder.meetup.mp-labs.de/
+
+   * - *West Workspace*
+     - **Verzeichnis unter** :file:`/home/coder/workspace`
+
+       | Backup: https://bridle.tiac-systems.net/tutorials
+       | Datei (ca. 2.0GB): :file:`west-workspace.tar.xz` (aktuellstes Datum)
