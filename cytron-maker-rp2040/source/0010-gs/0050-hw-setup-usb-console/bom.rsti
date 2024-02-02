@@ -1,0 +1,35 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - .. image:: /_images/boms/red4power-r4-u007b-with-cable.*
+          :align: center
+     - **1x** USB-Hub mit Kabeln
+
+       *4-fach USB 2.0 Mini-Hub* für die Verbindung von deinem *Host-PC* zum
+       *MCU-Board* (grünes Kabel) und den *Raspberry Pi – Debug Probe*
+       (orangenes Kabel).
+
+       .. tip::
+
+          **Den USB Hub wirst du auch weiterhin benötigen! Belasse ihn
+          für alle anderen Übungen in deinem Aufbau.**
+
+   * - .. image:: /_images/boms/cytron-maker-pi-rp2040.*
+          :align: center
+     - **1x** MCU-Board
+
+       *Cytron – Maker Pi RP2040* als Zielsystem für alle Übungen.
+
+       .. tip::
+
+          **Das MCU-Board wirst du auch weiterhin benötigen! Belasse es
+          für alle anderen Übungen in deinem Aufbau.**

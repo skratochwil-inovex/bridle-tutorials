@@ -1,0 +1,18 @@
+.. admonition:: Zeit für deine Notizen, Fragen und Anregungen
+   :class: question
+   :collapsible: open
+
+   .. only:: rinoh
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+   *z.B.: Was sind das für "komische" Zeilen auf der Console, die mit einem
+   Zeitstempel in eckigen Klammern beginnen? Also das hier:*
+   "``[00:00:00.288,000] <wrn> udc_rpi: BUS RESET``" oder
+   "``[00:00:04.002,000] <inf> main: Displaying pattern on strip``"
