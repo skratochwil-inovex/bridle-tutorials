@@ -1,0 +1,88 @@
+.. rst-class:: page-break
+
+   .. only:: rinoh
+
+      |nbsp|
+.. QUIRKS: Only with this dummy paragraph, the special rinohtype class
+   'page-break-paragraph' react as expected. But the '.. rubric::' directive
+   should also be handled as a 'ParagraphStyle' and trigger that class, But
+   it doesn't work as expected. Fix this later!
+
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - .. image:: /_images/boms/red4power-r4-u007b-with-cable.*
+          :align: center
+     - **1x** USB-Hub mit Kabeln
+
+       *4-fach USB 2.0 Mini-Hub* für die Verbindung von deinem *Host-PC* zum
+       *MCU-Board* (grünes Kabel) und den *Raspberry Pi – Debug Probe*
+       (orangenes Kabel).
+
+   * - .. image:: /_images/boms/cytron-maker-pi-rp2040.*
+          :align: center
+     - **1x** MCU-Board
+
+       *Cytron – Maker Pi RP2040* als Zielsystem für alle Übungen.
+
+   * - .. image:: /_images/boms/seeed-101020003-button.*
+          :align: center
+     - **1x** Taste
+
+       *Grove – Button* als digitales Eingabegerät.
+
+   * - .. image:: /_images/boms/seeed-104030005-led-red.*
+          :align: center
+     - **1x** LED
+
+       *Grove – LED* als digitales Ausgabegerät.
+
+   * - .. image:: /_images/boms/seeed-101020017-rvpoti.*
+          :align: center
+     - **1x** Potentiometer (veränderbarer Widerstand)
+
+       *Grove – Potentiometer* als analoge Quelle für Spannungen.
+
+   * - .. image:: /_images/boms/seeed-101020192-bmp280.*
+          :align: center
+     - **1x** Barometer (Luftdruck Sensor)
+
+       *Grove – Barometer Sensor BMP280* als digitales I²C Gerät.
+
+   * - .. image:: /_images/boms/seeed-110990031-36-38-40-64-grove-cable.*
+          :align: center
+     - **4x** Grove zu Grove, 5cm oder 10cm
+
+       Diese Kabel verbinden alle *Grove System Komponenten* (siehe oben)
+       mit dem MCU-Board *Cytron – Maker Pi RP2040*.
+
+   * - .. image:: /_images/boms/towerpro-sg90.*
+          :align: center
+     - **2x** Miniaturservomotor für 180° (±90° Anschlag)
+
+       *Tower Pro – SG90 Micro Servo* als Servo Motor mit Regelung der
+       Winkelposition zwischen 0~180° durch Pulsweite 500-2500 µs.
+
+   * - .. image:: /_images/boms/feetech-fs90r.*
+          :align: center
+     - **2x** Miniaturservomotor für 360° (kein Anschlag)
+
+       *Feetech – FS90R Micro Servo* als Servo Motor mit Regelung der
+       Rotationsgeschwindigkeit zwischen 0~100 :spelling:ignore:`U/min`
+       durch Pulsweite 900-2100 µs.
+
+   * - .. image:: /_images/boms/goobay-11473.*
+          :align: center
+     - **1x** Batteriehalter mit 4x AA/LR6 Alkali-Batterien
+
+       *Goobay 11473* als Energiequelle zur Versorgung des MCU-Boards mit den
+       zusätzlich angeschlossenen 4 Servo Motoren.
