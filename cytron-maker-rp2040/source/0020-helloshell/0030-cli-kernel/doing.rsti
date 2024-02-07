@@ -1,0 +1,226 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Zunächst wollen wir uns Klarheit über die aktuell laufende Version des Kerns
+von Zephyr verschaffen, gib ein::
+
+   kernel version
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   Zephyr version 3.6…
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Du wirst bereits mitbekommen haben, dass in deinem *West Workspace* auf deinem
+*Host-PC* nicht nur Zephyr als Quelle vorliegt, sondern auch das *Downstream
+Projekt* **Bridle**. Auch dieses stellt eine ähnliche Funktion für die
+Ermittlung dessen aktuell benutzter Version zur Verfügung, gib ein::
+
+   bridle version
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   Bridle version 3.6…
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Darüber hinaus kann das Kommando :bcy:`bridle` neben der eigenen auch
+die Version des aktuell laufenden Kerns von Zephyr ermitteln und anzeigen,
+gib ein::
+
+   bridle info
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   Zephyr: 3.6…
+   Bridle: 3.6…
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Das waren noch sehr triviale Informationen. Im Alltag wird es aber mitunter
+wichtiger sein zu erfahren, wie lange ein System denn schon seit seinem
+initialen Start läuft. Hierfür bietet sich das Unterkommando
+:bcy:`kernel uptime` an, gib ein::
+
+   kernel uptime
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   Uptime: 1182430 ms
+
+Der zurückgegebene Wert in Millisekunden entspricht exakt dem Rückgabewert
+der Zephyr Kern-Funktion :ref:`k_uptime_get() <zephyr:kernel_timing_uptime>`
+und ist eine 64-bit breite ganze Zahl (Integer). Ein Überlauf ist also frühstens
+nach weit mehr als 580 Millionen Jahren zu erwarten. Das reicht für
+Untersuchungen in unserer Gegenwart vollkommen aus.
+
+Es sei an dieser Stelle erwähnt, dass du hier auch einen Parameter für eine
+"schönere" Ausgabe angeben kannst, :cy:`kernel uptime` :bcy:`\-\-pretty` oder
+kürzer :cy:`kernel uptime` :bcy:`-p`. Probiere es doch mal aus.
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Ebenso eine wohl am häufigsten benötigte Information ist der gegenwärtige
+Betriebszustand des RTOS Kerns, also seiner parallel ablaufenden Threads,
+deren Prioritäten, Scheduler-Verhalten und Stack-Belastungen. Dazu dient
+das Unterkommando :bcy:`kernel threads`, gib ein::
+
+   kernel threads
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   Scheduler: 1234 since last call
+   Threads:
+    0x20001450 usb_rpi
+           options: 0x0, priority: -14 timeout: 0
+           state: pending, entry: 0x100084a1
+           stack size 1024, unused 624, usage 400 / 1024 (39 %)
+
+    0x20001c18 sysworkq
+           options: 0x0, priority: -1 timeout: 0
+           state: pending, entry: 0x1000f615
+           stack size 1024, unused 816, usage 208 / 1024 (20 %)
+
+    0x20000fe8 usbworkq
+           options: 0x0, priority: -1 timeout: 0
+           state: pending, entry: 0x1000f615
+           stack size 1024, unused 760, usage 264 / 1024 (25 %)
+
+   \*0x200010c0 **shell_uart**
+           options: 0x0, priority: 14 timeout: 0
+           state: queued, entry: 0x10006f09
+           stack size 2048, unused 880, usage 1168 / 2048 (57 %)
+
+    0x20000af0 logging
+           options: 0x0, priority: 14 timeout: 0
+           state: pending, entry: 0x100036fd
+           stack size 768, unused 536, usage 232 / 768 (30 %)
+
+    0x20001a88 idle
+           options: 0x1, priority: 15 timeout: 0
+           state: , entry: 0x100159d5
+           stack size 256, unused 168, usage 88 / 256 (34 %)
+
+Für die Interpretation dieser Liste bedarf es eines tieferen Verständnis für
+die vielen verschiedenen Möglichkeiten wie der Scheduler von Zephyr eingestellt
+und skaliert wurde. In aller Regel sind die Threads einzeln mit abfallender
+Priorität von oben nach unten aufgelistet. *Negative Prioritäten* werden vom
+Scheduler *kooperativ*, *positive* hingegen *preemptiv* verwaltet. Der mit
+einem :b:`*` gekennzeichnete Thread ist der gerade aktive Thread (logisch,
+das ist die Shell, welche gerade diese Liste auch ausgibt, also das Kommando
+ausführt). Ferner sind die den einzelnen Threads zugeordneten Stacks mit den
+jeweiligen Füllständen mit aufgeführt.
+
+.. admonition:: Gut zu wissen
+   :class: info
+
+   Es gibt natürlich auch die Sichtweise nur auf die Stacks. Dazu dient das
+   Unterkommando :bcy:`kernel stacks`. Probiere es doch mal aus.
+
+Tiefer wollen wir hier an dieser Stelle nicht in die Thematik der Thread und
+Stack Verwaltung mit Zephyr gehen. Das füllt gerne ein zweitägiges Training und
+bedarf separater Übungen. Wir verweisen aber gerne auf die Zephyr Dokumentation
+in die Abschnitte :ref:`zephyr:kernel_api`, :ref:`zephyr:threads_v2`,
+:ref:`zephyr:scheduling_v2` und :ref:`zephyr:stacks_v2`.
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
