@@ -1,0 +1,124 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Zephyr kennt ein umfangreiches und sehr flexibles Gerätetreiber Modell, siehe
+auch :ref:`zephyr:device_model_api` in der Zephyr Dokumentation. Wie viele und
+welche Geräte zum Zeitpunkt der Kompilierung aktiviert wurden, verrät dir das
+Unterkommando :bcy:`device list`, gib ein::
+
+   device list
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   devices:
+   - clock-controller@40008000 (READY)
+   - reset-controller@4000c000 (READY)
+   - snippet_cdc_acm_console_uart (READY)
+   - uart@40034000 (READY)
+   - timer@40054000 (READY)
+   - pio@50200000 (READY)
+   - gpio@40014000 (READY)
+   - adc@4004c000 (READY)
+   - flash-controller@18000000 (READY)
+   - i2c@40044000 (READY)
+   - pwm@40050000 (READY)
+   - vreg@40064000 (READY)
+   - pwm_leds (READY)
+
+Die zurückgegebene Liste entspricht im Großen und Ganzen genau jenen Knoten
+(HW-Instanzen), welche im zugrundeliegenden :ref:`zephyr:devicetree` deines
+MCU-Boards mit der Eigenschaft :devicetree:`status = "okay";` definiert wurden.
+
+Somit hat dann auch das Konfigurationswerkzeug :ref:`Kconfig <zephyr:kconfig>`
+einen entsprechenden Gerätetreiber in den Quellen von Zephyr (oder auch Bridle)
+aktiviert und das Build-System :ref:`CMake <zephyr:cmake-details>` diesen
+vollautomatisch in die **Zephyr UF2 Firmware** eingebaut.
+
+Am Ende eines jeden Eintrags erkennst du an dem ``(READY)``, dass sich der
+zugehörige Treiber ordentlich initialisieren konnte, dieser also seine
+HW-Instanz tatsächlich zum Startzeitpunkt vorgefunden hat, und man mit diesem
+Gerät über eine geeignete Zephyr API arbeiten kann. Andere Zustände werden hier
+auch oft angezeigt. So kennt das in Zephyr mittlerweile gut integrierte
+:ref:`zephyr:pm-guide` noch die Zustände ``(off)``, ``(active)`` oder
+``(suspended)``. Der Zustand ``(DISABLED)`` wäre ein Indiz für fehlende
+Abhängigkeiten oder falsche Reihenfolgen der Initialisierung. Auch ein Fehler
+im :spelling:ignore:`Konfigurations-` und Build-Management (Devicetree, Kconfig
+und CMake) auf Quellcode-Ebene kann diesen Zustand erzeugen, also z.B. eine
+HW-Instanz wurde aktiviert, der Treiber dazu mit eingebunden, aber auf dem
+Zielsystem gibt es diese Hardware überhaupt nicht.
+
+.. rst-class:: page-break
+
+In den folgenden Übungen werden wir nun Kommandos gegen spezialisierte Zephyr
+APIs ansehen. Diese Kommandos wollen immer ein Gerät genannt bekommen. Das wird
+dann genau eines aus dieser Liste sein. Wir werden in diesem Tutorial nicht
+sämtliche spezialisierten Kommandos behandeln können. Auch das ist wieder ein
+mehrstündiges Training. Aber eine Liste von Shell Kommandos für die jeweiligen
+Geräte wollen wir gerne an diesem konkreten Beispiel geben.
+
+.. list-table::
+   :align: center
+   :width: 80%
+   :widths: 50, 50
+   :header-rows: 1
+
+   * - Gerätename
+     - Shell Kommando
+
+   * - ``adc@4004c000``
+     - :bcy:`adc`
+   * - ``flash-controller@18000000``
+     - :bcy:`flash`
+   * - ``gpio@40014000``
+     - :bcy:`gpio`
+   * - ``i2c@40044000``
+     - :bcy:`i2c`
+   * - ``pwm@40050000``
+     - :bcy:`pwm`
+   * - ``pwm_leds``
+     - :bcy:`led`
+   * - ``timer@40054000``
+     - :bcy:`timer`
+   * - ``vreg@40064000``
+     - :bcy:`regulator`
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
