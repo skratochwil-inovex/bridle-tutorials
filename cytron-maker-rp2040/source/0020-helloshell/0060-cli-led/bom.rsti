@@ -1,0 +1,30 @@
+.. rst-class:: page-break
+
+   .. only:: rinoh
+
+      |nbsp|
+.. QUIRKS: Only with this dummy paragraph, the special rinohtype class
+   'page-break-paragraph' react as expected. But the '.. rubric::' directive
+   should also be handled as a 'ParagraphStyle' and trigger that class, But
+   it doesn't work as expected. Fix this later!
+
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`Übung zuvor <hs-cli-gpio>`.
+
+   * - **Software:**
+     - Du benötigst exakt die selbe Zephyr Firmware wie in der
+       :ref:`Übung zuvor <hs-cli-gpio>`, das Bridle Beispiel
+       ":ref:`bridle:helloshell`" (``helloshell``).

@@ -1,0 +1,31 @@
+.. admonition:: Zeit für deine Notizen, Fragen und Anregungen
+   :class: page-break question
+   :collapsible: open
+
+   .. only:: rinoh
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+      |nbsp|
+
+   *Warum gibt es nicht wie in der Übung zuvor einen symbolischen Namen für
+   die LED? Im Devicetree steht doch:* :devicetree:`label = "PWM_LED";`
+
+   *Warum bekomme ich eine Fehlermeldung, wenn ich mit dem Unterkommando*
+   :icy:`led get_info pwm_leds 0` *Informationen erhalten will? Ist das nicht
+   etwas Ähnliches wie in der Übung zuvor?*
+
+   *Warum kann ich die zusätzlich angeschlossene LED am Stecker GROVE 3,
+   Pin 4, nich auch wie in der Übung zuvor mit dem LED Kommando erreichen?*

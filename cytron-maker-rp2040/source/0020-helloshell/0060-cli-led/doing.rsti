@@ -1,0 +1,119 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. admonition:: Beachte bitte!
+   :class: red-border failure
+   :collapsible: open
+
+   **PWM-LED kollidiert mit GPIO!**
+
+   Operationen an Ausgängen im PWM-Modus, also wie hier in dieser Übung mit
+   der einen als PWM-LED definierten Diagnose-LED an **GP7**, schlagen immer
+   dann fehl, wenn die entsprechende Leitung im Mikrocontroller zuvor als
+   digitaler Ausgang über die GPIO API konfiguriert wurde. Achte daher genau
+   auf das durchgeführte Reset (``RST`` Taste kurz gedrückt) an deinem
+   MCU-Board, da du eventuell in der :ref:`Übung zuvor <hs-cli-gpio>` auch mit
+   der LED an **GP7** (``GROVE73ULED0``) experimentiert hast.
+
+   **Dieser Zustand der internen Signalverknüpfung im Mikrocontroller (pinmux)
+   ist zur Laufzeit innerhalb der Shell nicht identifizier- und umkehrbar und
+   erfordert ein System-Reset!**
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Schauen wir uns zunächst den Syntax des Kommando :bcy:`led` an. Gib ein::
+
+   led -h
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   led - LED commands
+   Subcommands:
+     off             : <device> <led>
+     on              : <device> <led>
+     get_info        : <device> <led>
+     set_brightness  : <device> <led> <value [0-100]>
+     set_color       : <device> <led> <color 0 [0-255]> ... <color N>
+     set_channel     : <device> <channel> <value [0-255]>
+     write_channels  : <device> <chan> <value 0 [0-255]> ... <value N>
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: MCU-Board Dignose-LED an **GP7** als **LED Index 0**
+
+Da du weder eine komplexe LED-Matrix noch eine RGB-LED oder einen LED-Streifen
+durch den Devicetree deines MCU-Boards vorgegeben bekommst, gestaltet sich die
+Benutzung der einen einzelnen LED als recht einfach. Wir können lediglich die
+Helligkeit von 0% (dunkel, oder aus) bis 100% (hell, oder ein) verändern.
+
+Gib nacheinander ein und beobachte::
+
+   led on pwm_leds 0
+   led set_brightness pwm_leds 0 10
+   led set_brightness pwm_leds 0 50
+   led set_brightness pwm_leds 0 100
+   led off pwm_leds 0
+
+Mehr kann man in dieser Übung nicht machen; es gibt ja nur eine einzige LED
+in dieser Geräteklasse.
+
+.. list-table::
+   :align: center
+   :width: 100%
+   :widths: 70, 30
+
+   * - Aufgefallen sollte aber sein, dass die Helligkeit in Prozent nicht ganz
+       linear wirkt. Das ist auch richtig so. Die LED an **GP7** wird durch
+       den Feldeffekttransistor (FET) **Q17**, ein Anreicherungstyp, angesteuert.
+       Der FET hat nur bis zu einer bestimmten Spannung am "Eingang" (**GP7**)
+       einen linearen Arbeitsbereich. Ab dann befinden er sich in der Sättigung.
+       Mit kleinen PWM Spannungen (kleine Prozentwerte) können wir die Spannung
+       und somit den Stromfluss an der LED verändern. Bei größeren Spannungen
+       (hohe Prozentwerte) befindet sich der FET schon in seiner Sättigung und
+       bewirkt keine Änderung an der LED.
+     - .. image:: /_images/doing/cytron-maker-pi-rp2040-sch-ds14.*
+          :align: center
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
