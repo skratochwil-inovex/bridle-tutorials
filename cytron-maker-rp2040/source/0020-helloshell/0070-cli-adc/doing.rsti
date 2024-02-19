@@ -1,0 +1,294 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+Der kleine Auszug aus dem Devicetree weiter oben zeigt dir, dass du in deiner
+aktuellen Zephyr Laufzeitumgebung wenigstens einen Gerätenamen für die im
+Mikrocontroller vorhandene ADC vorfinden musst. Ein Blick zurück in die
+:ref:`Übung mit dem Kommando device <hs-cli-device>` zeigt uns, dass der Name
+dieses ADC-Gerätes ``adc@4004c000`` lauten muss.
+
+Schauen wir uns zunächst den Syntax des Kommando :bcy:`adc` und die aktuellen
+Parameter dieser ADC an. Gib nacheinander ein und beobachte::
+
+   adc adc@4004c000 -h
+   adc adc@4004c000 print
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   adc@4004c000 - Select subcommand for ADC property label.
+   Subcommands:
+     acq_time    : Configure acquisition time.
+                   Usage: acq_time <time> <unit>
+                   units: us, ns, ticks
+     channel     : Configure ADC channel
+     gain        : Configure gain.
+     print       : Print current configuration
+     read        : Read adc value
+                   Usage: read <channel>
+     reference   : Configure reference
+     resolution  : Configure resolution
+                   Usage: resolution <resolution>
+
+.. parsed-literal::
+   :class: code
+
+   adc@4004c000:
+   Gain: 1
+   Reference: INTERNAL
+   Acquisition Time: 0
+   Channel ID: 0
+   Differential: 0
+   Resolution: 0
+
+Was sagt uns das nun? Die ADC wird jeden einzelnen Kanal mit einer
+Signalverstärkung von '1' gegen eine interne Referenzspannung mit einer
+Auflösung von **'0' (!!!)** wandeln wollen. **Das wird nicht funktionieren!**
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: Auflösung einstellen
+
+Wir müssen also mindestens die Auflösung auf einen plausiblen Wert einstellen.
+Ohne jetzt lange in der Dokumentation des Mikrocontrollers zu suchen, wenden
+wir einfach eine Auflösung von 12-bit an und kontrollieren unsere Änderung.
+
+Gib nacheinander ein und beobachte::
+
+   adc adc@4004c000 resolution 12
+   adc adc@4004c000 print
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   adc@4004c000:
+   Gain: 1
+   Reference: INTERNAL
+   Acquisition Time: 0
+   Channel ID: 0
+   Differential: 0
+   Resolution: 12
+
+Das sieht schon besser aus. Wir könnten nun schon Messungen durchführen.
+
+Wenn du aber willst, kannst du auch gerne versuchen, die Signalverstärkung
+oder auch die Referenzspannung zu ändern. Dazu bietet dir die Zephyr Shell
+die beiden Unterkommandos :bcy:`adc adc@4004c000 gain` und
+:bcy:`adc adc@4004c000 reference` an. Sei aber nicht enttäuscht, wenn du dabei
+immerzu Fehlermeldungen erhältst. Die von dir benutzbare ACD lässt solche
+Einstellungen prinzipbedingt nicht zu und der in Zephyr vorhandene Treiber
+weigert sich schlicht, solche Änderungen durchzuführen. Du kannst nur eine
+Signalverstärkung von '1' gegen die interne Referenzspannung benutzen. Ein
+Versuch war es aber wert.
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+Nachdem nun deine ADC ordentlich eingestellt ist (es war ja nur die Auflösung)
+kann man nun eine erste Messungen durchführen. Wie du aus dem Devicetree weiter
+oben entnehmen kannst, existieren an dieser ADC insgesamt 4 Kanälen. Alle diese
+Kanäle werden eine Wandlung mit der voreingestellten **Auflösung von 12-bit**
+und einer **Signalverstärkung von '1'** gegen die interne Referenzspannung
+durchführen. Die **interne Referenzspannung** ist hier, wie allgemein in
+einfachen Schaltungen üblich, die Spannungsversorgung des Mikrocontrollers:
+
+.. compound::
+
+   .. centered:: |nbsp|
+   .. centered:: **Uᵣ = 3,3V**
+   .. centered:: |nbsp|
+
+Damit kann also nach folgender Formel jederzeit die anliegende Spannung an einem
+ADC Kanal errechnet werden, wenn der ermittelte äquivalente Zahlenwert **ADCₙ**
+bekannt ist (Rückgabewert der ADC API beim Lesen von einem Kanal). Umgestellt
+kann man auch den zu erwartenden äquivalenten Zahlenwert **ADCₙ** errechnen,
+wenn man die angelegte Spannung eines ADC Kanals kennt (konstant, zur
+Überprüfung).
+
+.. parsed-literal::
+   :class: text
+
+           **Uₐₙ** = ADCₙ · Uᵣ ÷ (2¹² - 1)    |    **ADCₙ** = Uₐₙ · (2¹² - 1) ÷ Uᵣ
+               = ADCₙ · 3,3V ÷ 4095       |         = Uₐₙ · 4095 ÷ 3,3V
+               **≈ ADCₙ · 0,81mV**            |         **≈ Uₐₙ · 1241V⁻¹**
+
+Aber was kannst du denn nun eigentlich messen? Dazu ist definitiv ein Blick in
+die Schaltpläne nötig. Die Steckverbinder **Grove 5**, **Grove 6** und
+**Grove 7** stellen dir die Kanäle **ADC0**, **ADC1**, und **ADC2** für eine
+externe Benutzung bereit. Der Kanal **ADC3** wird auf dem MCU-Board intern
+benutzt. Die folgende Übersicht gibt dir die wichtigsten Informationen dazu.
+
+
+.. list-table::
+   :align: center
+   :width: 100%
+   :widths: 50, 50
+   :header-rows: 1
+
+   * - Cytron – Maker Pi RP2040 (**ADC3**)
+     - Seeed Studio – Grove - Potentiometer (**ADC2**)
+
+   * - .. image:: /_images/doing/cytron-maker-pi-rp2040-sch-adc3.*
+          :align: center
+
+     - .. image:: /_images/doing/grove-potentiometer-sch-v12.*
+          :align: center
+
+   * - Auf dem MCU-Board wird der **ADC Kanal 3** für die Überprüfung der
+       **Motorspannung** genutzt. Nach Abzug aller Verluste ergibt sich auf
+       dem MCU-Board hierfür eine Spannung von **Uₘ ≈ 4,8V**. Durch den **1:2
+       Spannungsteiler** musst du also über den ADC Kanal 3 einen äquivalenten
+       Zahlenwert für eine Spannung von **Uₐ₃ ≈ Uₘ ÷ 2** erhalten:
+
+     - An deinem MCU-Board hast du *zusätzlich* das Modul **Seeed Studio –
+       Grove - Potentiometer** *angeschlossen*, am Steckverbinder **GROVE 7**.
+       Damit ist der **ADC Kanal 2** für die Messung einer von dir variierbaren
+       Spannung durch drehen an diesem veränderlichen Widerstand möglich. Die
+       maximale Spannung kann dabei den Wert von **3,3V ⊧ VCC** annehmen. Der
+       minimale Wert entspricht der Masse und beträgt **0V ⊧ GND**:
+
+   * - .. compound::
+
+          .. centered:: |nbsp|
+          .. centered:: **Uₐ₃ ≈ 2,4V**
+          .. centered:: **ADC₃ ≈ 2978**
+          .. centered:: |nbsp|
+
+     - .. compound::
+
+          .. centered:: |nbsp|
+          .. centered:: **Uₐ₂ ≈ 0V … 3,3V**
+          .. centered:: **ADC₂ ≈ 0 … 4095**
+          .. centered:: |nbsp|
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: aktuelle Motorspannung überprüfen
+
+Die **Messspannung Uₐ₃ ≈ 2,4V** an ADC Kanal 3 (**ADC3**), zur Überprüfung der
+Motorspannung *Uₘ ≈ 4,8V*, ist konstant und kann mit dem äquivalenten Zahlenwert
+**ADC₃ ≈ 2978** überprüft werden.
+
+Gib ein (gerne auch mehrmals nacheinander) und beobachte::
+
+   adc adc@4004c000 read 3
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   read: 2988
+   read: 2972
+   read: 2973
+   read: 2964
+   read: 2974
+
+**Das entspricht unserer Erwartung.**
+Die Motorspannung ist :spelling:ignore:`ca.` 4,8V.
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: zusätzlich angeschlossenes Potentiometer
+
+Die **Messspannung Uₐ₂** an ADC Kanal 2 (**ADC2**) hängt von der Position des
+*zusätzlich angeschlossenen Potentiometers* am Stecker **GROVE 7** ab und kann
+(theoretisch) Werte von **Uₐ₂ ≈ 0V … 3,3V** annehmen. Der äquivalente
+Zahlenwert beträgt demzufolge **ADC₂ ≈ 0 … 4095**. Rauschen und Verluste an
+Kontakten können diesen Bereich minimal einschränken.
+
+Gib mehrmals nacheinander ein, drehe dabei an dem Potentiometer und beobachte::
+
+   adc adc@4004c000 read 2
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+:ign:`Folgendes wird erscheinen:`
+
+.. parsed-literal::
+   :class: code
+
+   read: 4095
+   read: 3182
+   read: 2034
+   read: 1496
+   read: 998
+   read: 621
+   read: 57
+   read: 12
+   read: 0
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
