@@ -1,0 +1,165 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. admonition:: Beachte bitte!
+   :class: red-border failure
+   :collapsible: open
+
+   **PWM kollidiert mit GPIO!**
+
+   Operationen an Ausgängen im PWM-Modus schlagen immer dann fehl, wenn die
+   entsprechende Leitung im Mikrocontroller zuvor als digitaler Ausgang über
+   die GPIO API konfiguriert wurde. Achte daher genau auf das durchgeführte
+   Reset (``RST`` Taste kurz gedrückt) an deinem MCU-Board.
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+Im Grunde ändert sich bei der Benutzung des Kommando :bcy:`pwm` nichts weiter.
+Der Summer ist an **GP22** angeschlossen, somit wirst du nun den **PWM Kanal 6**
+benutzen.
+
+Zuvor berechnen wir uns aber noch passende Werte der Periode (Grundfrequenz) und
+der Impulsdauer (halbe Periode, 50% Tastverhältnis) für ein paar bekannte
+Frequenzen. Ein besonderer Fall wird hier die Frequenz von 0Hz sein. Ohne Dauer
+des Impulses schwingt der Ausgang der PWM nicht, der Energieinhalt ist 0 und
+somit wird auch kein Ton erzeugt. Der Summer verstummt und ist aus.
+
+.. table::
+   :align: center
+
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | Bedeutung                       | Frequenz *fₚ* | Periode *T = 1/fₚ*  | Impulsdauer *t = T/2* |
+   +=================================+===============+=====================+=======================+
+   | Stumm                           |           0Hz | *egal*, z.B. 1000µs | *Null*, also 0µs      |
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | Kammerton A                     |         440Hz | 2,272727ms = 2273µs |   1,136363ms = 1136µs |
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | :spelling:ignore:`Mittel-Freq.` |        1000Hz | 1,000000ms = 1000µs |   0,500000ms = 500µs  |
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | :spelling:ignore:`Reson.-Freq.` |        2730Hz | 0,366300ms = 366µs  |   0,183150ms = 183µs  |
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | :spelling:ignore:`Grenz-Freq.`  |         10kHz | 0,100000ms = 100µs  |   0,050000ms = 50µs   |
+   +---------------------------------+---------------+---------------------+-----------------------+
+   | Gehörtests:                     |         11kHz | 0,090909ms = 90µs   |   0,045454ms = 45µs   |
+   |                                 +---------------+---------------------+-----------------------+
+   |                                 |         12kHz | 0,083333ms = 83µs   |   0,041666ms = 41µs   |
+   |                                 +---------------+---------------------+-----------------------+
+   |                                 |         13kHz | 0,076923ms = 77µs   |   0,038461ms = 39µs   |
+   |                                 +---------------+---------------------+-----------------------+
+   |                                 |         14kHz | 0,071428ms = 71µs   |   0,035714ms = 36µs   |
+   |                                 +---------------+---------------------+-----------------------+
+   |                                 |         15kHz | 0,066666ms = 66µs   |   0,033333ms = 33µs   |
+   +---------------------------------+---------------+---------------------+-----------------------+
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: Frequenzen wohl bekannter Töne ausgeben
+
+Gib nun nacheinander ein und beobachte (besser gesagt lausche)::
+
+   pwm usec pwm@40050000 6 2273 1136
+   pwm usec pwm@40050000 6 1000 500
+   pwm usec pwm@40050000 6 366 183
+   pwm usec pwm@40050000 6 100 50
+   pwm usec pwm@40050000 6 90 45
+   pwm usec pwm@40050000 6 83 41
+   pwm usec pwm@40050000 6 77 39
+   pwm usec pwm@40050000 6 71 36
+   pwm usec pwm@40050000 6 66 33
+   pwm usec pwm@40050000 6 1000 0
+
+Mehr kann man in dieser Übung nicht machen; es gibt ja nur den einen Summer.
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: Euler und die Musik – Frequenzen der gleichstufigen Stimmung
+
+Aber halt, es gab doch noch die Tonleiter und ihre exakte mathematisch-logische
+Darstellung nach Euler\ [#]_.
+
+.. image:: /_images/doing/cmajor_scale.*
+   :align: center
+
+Ausgehend vom :brd:`Kammerton a'` (englisch :ird:`concert pitch A4`) werden
+Klaviernoten folgenden Frequenzen der gleichstufigen Stimmung\ [#]_ zugeordnet.
+Die zugehörige Periode und Impulsdauer ist schnell ausgerechnet:
+
+.. table::
+   :align: center
+
+   +-----------------------+-----------------------------+---------------------------------------+
+   |       Notation        |             *fₚ*            |                                       |
+   +-----------+-----------+--------------+--------------+         Shell Kommandozeile           |
+   | englisch  |  deutsch  |   *T = 1/fₚ* | *t = T/2*    |                                       |
+   +===========+===========+==============+==============+=======================================+
+   |    *C4*   |   **c'**  |           261,626Hz         | ``pwm usec pwm@40050000 6 3822 1911`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      3822µs  |      1911µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *D4*   |   **d'**  |           293,665Hz         | ``pwm usec pwm@40050000 6 3405 1703`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      3405µs  |      1703µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *E4*   |   **e'**  |           329,628Hz         | ``pwm usec pwm@40050000 6 3034 1517`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      3034µs  |      1517µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *F4*   |   **f'**  |           349,228Hz         | ``pwm usec pwm@40050000 6 2864 1432`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      2864µs  |      1432µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *G4*   |   **g'**  |           391,995Hz         | ``pwm usec pwm@40050000 6 2551 1276`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      2551µs  |      1276µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   | :ird:`A4` | :brd:`a'` |      :rd:`440,000Hz`        | ``pwm usec pwm@40050000 6 2273 1136`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           | :rd:`2273µs` | :rd:`1136µs` |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *B4*   |   **h'**  |           493,883Hz         | ``pwm usec pwm@40050000 6 2025 1012`` |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      2025µs  |      1012µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+   |    *C5*   |   **c''** |           523,251Hz         | ``pwm usec pwm@40050000 6 1911 956``  |
+   |           |           +--------------+--------------+                                       |
+   |           |           |      1911µs  |       956µs  |                                       |
+   +-----------+-----------+--------------+--------------+---------------------------------------+
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
+
+.. [#] :wiki:`Eulersches Tonnetz`
+.. [#] :wiki:`Frequenzen der gleichstufigen Stimmung`
