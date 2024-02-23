@@ -1,0 +1,162 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+.. rubric:: Messprozess laut Datenblatt
+
+Nach Datenblatt\ [#]_ des Herstellers auf Seite 12, Abschnitt *"7.4 Sensor
+Reading Process"*, müssen folgende 5 Schritte für eine einzelne Messung der
+Temperatur und Feuchtigkeit durchlaufen werden:
+
+.. figure:: /_images/doing/asair-aht20-ds1003-i2c-acq.*
+   :align: center
+
+   ASAIR AHT20 Datenblatt: *"I²C Data Acquisition"*
+
+Schritt 4, die Kontrolle der CRC-Prüfsumme, werden wir in dieser Übung nicht
+durchführen. Uns reicht ein plausibler Wert nach der Berechnung in Schritt 5.
+
+Für die Berechnung werden im Datenblatt auf Seite 13, Abschnitt *"8  Signal
+Conversion"* folgende Formeln für die Temperatur und Feuchtigkeit vorgegeben,
+wobei die Werte ``ST`` und ``SRH`` die aus dem Sensor gelesenen ganzzahligen
+Inhalte der Register für Temperatur und Feuchtigkeit sind:
+
+.. parsed-literal::
+   :class: text
+
+           **T[°C]** = 200°C · *ST* ÷ 2²⁰ - 50°C
+           **RH[%]** = 100% · *SRH* ÷ 2²⁰
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: Messprozess manuell durchführen
+
+Gib nacheinander ein und kontrolliere die Rückgabewerte:
+
+1. **Sensor-Status kontrollieren:**
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`read_byte` i2c@40044000 38 :brd:`71`
+
+   :ign:`Folgendes wird erscheinen:`
+
+   .. parsed-literal::
+      :class: code
+
+      Output: :bbl:`0x18`
+
+   Dieser Wert muss mit der AND-Maske von ``0x18`` wieder ``0x18`` ergeben.
+
+2. Kommando um eine (einzelne) **Messung auszulösen senden:**
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`write` i2c@40044000 38 :brd:`ac` :bbl:`33 00`
+
+   .. figure:: /_images/doing/asair-aht20-ds1003-i2c-trig.*
+      :align: center
+
+      ASAIR AHT20 Datenblatt: *"I²C Trigger Measurement"*
+
+3. **Messung abwarten:** Da du alles manuell machst, wird die **erforderliche
+   Wartezeit von 80ms** schon durch kopieren oder eintippen des nächsten
+   Kommandos vorüber sein. Setze also gleich mit den nächsten Schritten
+   fort.
+
+4. **Messdaten vom Sensor lesen:** Das sind insgesamt 5 Byte Daten mit den
+   ganzzahligen Werten für Temperatur und Feuchtigkeit sowie 1 Byte für den
+   Sensor-Status und 1 Byte für die CRC-Prüfsumme. Du musst also insgesamt
+   7 Byte vom Sensor über I²C lesen:
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`read` i2c@40044000 38 :brd:`0` :bbl:`7`
+
+   :ign:`Folgendes wird (so ähnlich) erscheinen:`
+
+   .. parsed-literal::
+      :class: code
+
+      00000000: 1c **71 ff 35 ed 5e** fc              \|.q.5.^.          \|
+
+   .. figure:: /_images/doing/asair-aht20-ds1003-i2c-data.*
+      :align: center
+
+      ASAIR AHT20 Datenblatt: *"I²C Read Temperature and Humidity Data"*
+
+   Mit diesem HEX-Dump kannst du nun laut der Abbildung die ganzzahligen Werte
+   für die Temperatur und Feuchtigkeit herauslesen und aufschreiben:
+
+   .. admonition:: Deine Gedankenstütze
+      :class: question
+      :collapsible: open
+
+      +------------------------+----------------------------+--------+--------------+--------------+
+      |                        |             *Tutorial*              |          **DEINE**          |
+      | Wert / Abkürzung       +----------------------------+--------+--------------+--------------+
+      |                        |            HEX             |  DEZ   |     HEX      |     DEZ      |
+      +==============+=========+============================+========+==============+==============+
+      | Temperatur   | ``ST``  | :spelling:ignore:`0x5ed5e` | 388446 |``__________``|``__________``|
+      +--------------+---------+----------------------------+--------+--------------+--------------+
+      | Feuchtigkeit | ``SRH`` | :spelling:ignore:`0x71ff3` | 466931 |``__________``|``__________``|
+      +--------------+---------+----------------------------+--------+--------------+--------------+
+
+5. **Berechnung durchführen:** setze nun die beiden Werte von deiner Messung in
+   die oben genannten Formeln ein und berechne die Temperatur und Feuchtigkeit.
+   Hier ist ein Beispiel und Platz für deine eigene Berechnung:
+
+   .. parsed-literal::
+      :class: text
+
+              **T[°C]** = 200°C · *ST* ÷ 2²⁰ - 50°C
+                    = 200°C · **388446** ÷ 2²⁰ - 50°C     = **24,09°C**
+
+              **T[°C]** = 200°C · *ST* ÷ 2²⁰ - 50°C
+                    = 200°C · __________ ÷ 2²⁰ - 50°C = __________°C
+
+   .. parsed-literal::
+      :class: text
+
+              **RH[%]** = 100% · *SRH* ÷ 2²⁰
+                    = 100% · **466931** ÷ 2²⁰             = **44,53%**
+
+              **RH[%]** = 100% · *SRH* ÷ 2²⁰
+                    = 100% · __________ ÷ 2²⁰         = __________%
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
+
+.. [#] https://asairsensors.com/wp-content/uploads/2021/09/Data-Sheet-AHT20-Humidity-and-Temperature-Sensor-ASAIR-V1.0.03.pdf
