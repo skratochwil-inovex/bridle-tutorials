@@ -1,0 +1,20 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`Übung zuvor <hs-cli-i2c-aht20>`.
+
+   * - **Software:**
+     - Du benötigst exakt die selbe Zephyr Firmware wie in der
+       :ref:`Übung zuvor <hs-cli-i2c-aht20>`, das Bridle Beispiel
+       ":ref:`bridle:helloshell`" (``helloshell``).

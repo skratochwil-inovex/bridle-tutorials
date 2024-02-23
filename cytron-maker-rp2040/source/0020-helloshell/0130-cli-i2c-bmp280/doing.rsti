@@ -1,0 +1,170 @@
+.. rubric:: Durchführung
+
+Hole deinen **Terminalemulator** in den Vordergrund und **stelle sicher**,
+das du nach einem Reset (``RST`` Taste kurz gedrückt), folgendes siehst:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.179,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.267,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Hello World! I'm THE SHELL from cytron_maker_pi_rp2040
+   :bgn:`uart:~$` _
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+.. rubric:: Messprozess laut Datenblatt
+
+Ein erster Blick in das Datenblatt\ [#]_ des Herstellers offenbart ein recht
+komplexes Innenleben des Sensors BMP280. Der Sensor verfügt über 4 verschiedene
+Betriebszustände (*Power Off*, *Sleep*, *Normal* und *Forced*), skalierbare
+Genauigkeiten (*Oversamplings*: 16/17/18/19/20-bit) und einen optional nutzbaren
+IIR Filter für eine Unterdrückung kurzzeitiger Störungen (z.B. Zuschlagen einer
+Tür oder Fenster, oder Wind, der in den Sensor bläst). Kurz gesagt, **sowohl das
+Setup als auch die Berechnung mit Sensor-(Chip)-spezifischen Korrekturdaten ist
+manuell kaum umsetzbar.**
+
+Dennoch lässt sich der Sensor über ein paar wenige I²C Registerzugriffe zu
+kurzen einmaligen Messungen überreden. Die Berechnung der tatsächlichen Werte
+für Temperatur und Druck, nur mit einem Taschenrechner, ist dann aber schon zu
+aufwändig.
+
+.. admonition:: HINWEIS
+   :class: info
+
+   **Wir beschränken uns daher nur auf das Auslesen der Temperatur und einer
+   groben Überschlagsrechnung ohne Kompensation.**
+
+**Du kannst damit** aber bereits deine **Hardware** an sich **überprüfen – ohne
+einen speziellen Zephyr Sensor Treiber aktiviert haben zu müssen.** Die volle
+Funktion solltest du aber immer durch einen Treiber abbilden. Dazu kommen wir
+dann im Anschluss in der :ref:`folgenden Übung <hs-cli-sensor-bmp280>`.
+
+Für den Aufbau der I²C Kommandos schauen wir kurz auf die Registerbank im
+Sensor, im Datenblatt auf Seite 24 im Anschnitt *"4.2 Memory map"*:
+
+.. figure:: /_images/doing/bst-bmp280-ds001-i2c-regmap.*
+   :align: center
+
+   Bosch BMP280 Datenblatt: *"I²C Register Memory Map"*
+
+So wie in der :ref:`Übung zuvor <hs-cli-i2c-aht20>` werden wir zunächst prüfen,
+ob der Sensor überhaupt am I²C Bus erreichbar ist (Register **id**), dann eine
+einzelne Messung starten (Register **ctrl_meas**), die Daten lesen (Register
+**temp_msb** bis **temp_xlsb**) und eine Berechnung durchführen.
+
+Wir werden nur den ganzzahligen Wert für die Temperatur ``UT`` ermitteln und
+diese mit der folgenden Überschlagsrechnung sehr grob berechnen:
+
+.. parsed-literal::
+   :class: text
+
+           **T[°C]** ≈ *UT* ÷ 20000°C⁻¹                             | ± 5°C
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... ACTION .............................................................
+
+.. image:: /_images/symbol-doing-vi.*
+   :class: sidecar
+
+.. rubric:: Messprozess manuell durchführen
+
+Gib nacheinander ein und kontrolliere die Rückgabewerte:
+
+1. **Sensor-ID kontrollieren:**
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`read_byte` i2c@40044000 77 :brd:`d0`
+
+   :ign:`Folgendes wird erscheinen:`
+
+   .. parsed-literal::
+      :class: code
+
+      Output: :bbl:`0x58`
+
+   Dieser Wert muss für einen **BMP280 immer** ``0x58`` sein. Sollte
+   aus Versehen der teurere *BME280* angeschlossen sein, dann ist dieser
+   Wert ``0x60``!
+
+2. Kommando um eine (einzelne) **Messung auszulösen senden:**
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`write` i2c@40044000 77 :brd:`f4` :bbl:`fd`
+
+   Damit wird eine einzelne Messung sowohl der Temperatur als auch des Drucks
+   mit jeweils 20-bit Genauigkeit ausgelöst. Danach geht der Sensor selbständig
+   in den Betriebsmodus *Sleep* zurück, kann aber ausgelesen werden.
+
+3. **Messung abwarten:** Da du alles manuell machst, wird die **erforderliche
+   Wartezeit von etwa 45ms** schon durch kopieren oder eintippen des nächsten
+   Kommandos vorüber sein. Setze also gleich mit den nächsten Schritten
+   fort.
+
+4. **Messdaten vom Sensor lesen:** Das sind insgesamt 3 Byte Daten für den
+   ganzzahligen Wert der Temperatur ab der I²C Register-Adresse ``0xfa``:
+
+   .. parsed-literal::
+      :class: code
+
+      i2c :brd:`read` i2c@40044000 77 :brd:`fa` :bbl:`3`
+
+   :ign:`Folgendes wird (so ähnlich) erscheinen:`
+
+   .. parsed-literal::
+      :class: code
+
+      00000000: **82 5c 70**                          \|.\p              \|
+
+   Mit diesem HEX-Dump kannst du nun laut der Abbildung den ganzzahligen Wert
+   für die Temperatur herauslesen und aufschreiben:
+
+   .. admonition:: Deine Gedankenstütze
+      :class: question
+      :collapsible: open
+
+      +------------------------+----------------------------+--------+--------------+--------------+
+      |                        |             *Tutorial*              |          **DEINE**          |
+      | Wert / Abkürzung       +----------------------------+--------+--------------+--------------+
+      |                        |            HEX             |  DEZ   |     HEX      |     DEZ      |
+      +==============+=========+============================+========+==============+==============+
+      | Temperatur   | ``UT``  | :spelling:ignore:`0x825c7` | 533959 |``__________``|``__________``|
+      +--------------+---------+----------------------------+--------+--------------+--------------+
+
+5. **Berechnung durchführen:** setze nun den Werte von deiner Messung in die
+   oben genannten Formeln ein und berechne die Temperatur. Hier ist ein Beispiel
+   und Platz für deine eigene Berechnung:
+
+   .. parsed-literal::
+      :class: text
+
+              **T[°C]** ≈ *UT* ÷ 20000°C⁻¹
+                    ≈ **533959** ÷ 20000°C⁻¹ ≈ 26,69795°C         | ± 5°C
+
+              **T[°C]** ≈ *UT* ÷ 20000°C⁻¹
+                    ≈ __________ ÷ 20000°C⁻¹ ≈ __________°C   | ± 5°C
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2
+   </_assets/ZS-cytron_maker_pi_rp2040-usbcons-helloshell.uf2>`
+   – als Not-Backup gedacht!
+
+.. [#] https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp280-ds001.pdf
