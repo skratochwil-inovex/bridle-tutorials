@@ -1,0 +1,28 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`Übung zuvor <demo-zephyr-sensor-bme280>`.
+
+   * -
+     - **Alternativ kannst du folgende Komponente benutzen:**
+
+   * - .. image:: /_images/boms/seeed-101020015-rvntc.*
+          :align: center
+     - **1x** NTC Thermistor (Temperatur Sensor)
+
+       *Grove – Temperature Sensor V1.2* als analoges Gerät.
+
+   * - **Software:**
+     - Du wirst eine neue Zephyr UF2 Firmware bauen, das Zephyr Beispiel
+       :doc:`zephyr:samples/drivers/adc/README`.
