@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2024 TiaC Systems
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&grove_i2c {
+	bmp280: bmp280@77 {
+		/* 0x76 - SDO <-> GND */
+		/* 0x77 - SDO <-> VCC */
+		compatible = "bosch,bme280";
+		reg = <0x77>;
+
+		friendly-name = "air pressure";
+	};
+};
