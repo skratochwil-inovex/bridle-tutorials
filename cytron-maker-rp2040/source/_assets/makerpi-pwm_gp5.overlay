@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2024 TiaC Systems
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&pwm_makerpi {
+	group5_led {
+		pinmux = <PWM_2B_P5>;		/* GP5: PWM2CHB (5) */
+	};
+};
+
+&pwm {
+	divider-frac-2 = <15>;
+	divider-int-2 = <255>;
+};

@@ -1,0 +1,22 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`Übung zuvor <demo-zephyr-driver-adc>`.
+
+   * - **Software:**
+     - Du wirst neue Zephyr UF2 Firmware bauen, die Zephyr Beispiele
+       :doc:`zephyr:samples/basic/blinky/README`,
+       :doc:`zephyr:samples/basic/blinky_pwm/README`,
+       :doc:`zephyr:samples/basic/fade_led/README` und
+       :doc:`zephyr:samples/basic/button/README`.

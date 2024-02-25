@@ -1,0 +1,364 @@
+.. rst-class:: page-break
+
+   .. only:: rinoh
+
+      |nbsp|
+.. QUIRKS: Only with this dummy paragraph, the special rinohtype class
+   'page-break-paragraph' react as expected. But the '.. rubric::' directive
+   should also be handled as a 'ParagraphStyle' and trigger that class, But
+   it doesn't work as expected. Fix this later!
+
+.. rubric:: Durchführung
+
+Du beginnst mit drei speziellen Devicetree Overlays. Du hast das Prinzip nun
+schon mehrmals durchlaufen. Es sollte dir nicht mehr schwer fallen, diese wieder
+direkt in deinem West Workspace anzulegen.
+
+.. admonition:: Externe Taste
+   :class: info
+
+   Für die externe Taste am Steckverbinder **GROVE 2** über die Leitung **GP3**
+   empfehlen wir den Dateinamen :file:`makerpi-btn_gp3.overlay` mit dem Inhalt:
+
+   .. literalinclude:: /_assets/makerpi-btn_gp3.overlay
+      :language: DTS
+      :lines: 6-
+
+   **Eine kurze Erläuterung dazu:** Die externe Taste hängt sich an den bereits
+   durch das MCU-Board deklarierten Knoten :devicetree:`&gpio_keys` und fügt
+   eine weitere **GPIO Taste** hinzu.
+
+   Es entsteht damit der neue Knoten :devicetree:`&btn_gp3`. Dessen Eigenschaft
+   :devicetree:`gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;` spezifiziert die Lage der
+   externen Taste an **GP3** und dass der *assertion level* für die Darstellung
+   des logischen Werts '1' auch dem elektrischen Pegel *high* entspricht – also
+   keine Negation statt finden muss. Das wusstest du schon aus der
+   :ref:`zurückliegenden Übung <hs-cli-gpio>`, als du den Eingang **GP3** mit
+   dem Zephyr Shell Kommando :bcy:`gpio` untersucht hast.
+
+   Viel interessanter ist hier der Knoten :ref:`aliases <zephyr:dt-alias-chosen>`.
+   Dieser dient dazu, andere Knoten im Devicetree als einen vereinheitlichten
+   Namen anzugeben. Der symbolische Name ``sw0`` wird von einigen Zephyr
+   Standard Beispielen im C-Quellcode als Synonym für eine Taste oder Schalter
+   an einer einfachen GPIO Leitung interpretiert. Der Sourcecode muss damit nie
+   wieder geändert werden, nur weil sich im Devicetree der Name für eine solche
+   Art Knoten geändert hat. Wenn so etwas passiert, also auf Devicetree Ebene,
+   dann wäre auch auf dieser Ebene der Eintrag unter ``aliases`` zu ändern.
+
+   **Das ist wieder ein erfrischendes Beispiel von HW- und SW-Abstraktion und
+   lässt das Herz eines Systemarchitekten höher schlagen. – Oder etwa nicht?**
+
+.. admonition:: Externe LED
+   :class: page-break info
+
+   Für die externe LED am Steckverbinder **GROVE 3** über die Leitung **GP5**
+   oder den **PWM Kanal 5** empfehlen wir den Dateinamen
+   :file:`makerpi-led_gp5.overlay` mit dem Inhalt:
+
+   .. literalinclude:: /_assets/makerpi-led_gp5.overlay
+      :language: DTS
+      :lines: 6-
+
+   **Eine kurze Erläuterung dazu:** Die Muster beginnen sich langsam zu
+   wiederholen. Auch die externe LED wird den Zephyr Standard Beispielen über
+   die richtigen Einträge im Knoten ``aliases`` bekannt gegeben. Die allgemein
+   eingehaltene Konvention in den Zephyr Standard Beispielen ist dabei:
+
+   - ``led0`` für eine LED an einer einfachen GPIO Leitung und
+   - ``pwm-led0`` für eine LED an einem PWM Kanal.
+
+   Das **Objekt hinter** ``led0`` wird somit immer über die **Zephyr GPIO API**
+   angesprochen (so wie übrigens auch die Taste zuvor) und das **Objekt hinter**
+   ``pwm-led0`` immer über die **Zephyr PWM API**.
+
+   Das MCU-Board deklariert bereits die beiden Knoten :devicetree:`&gpio_leds`
+   und :devicetree:`&pwm_leds` und in beide werden jeweils ein neuer Eintrag für
+   die externe LED hinzugefügt, zusammen mit den spezifischen Eigenschaften.
+
+.. admonition:: PWM Kanal 5
+   :class: page-break info
+
+   Für die ordentliche Konfiguration des **PWM Kanal 5** empfehlen wir den
+   Dateinamen :file:`makerpi-pwm_gp5.overlay` mit dem Inhalt:
+
+   .. literalinclude:: /_assets/makerpi-pwm_gp5.overlay
+      :language: DTS
+      :lines: 6-
+
+   **Eine kurze Erläuterung dazu:** Da die externe LED auch über einen PWM Kanal
+   angesprochen werden könnte, muss natürlich der entsprechende PWM Kanal 5 im
+   Sinne des jeweiligen Mikrocontrollers konfiguriert werden, hier für den
+   RP2040. Das sind PIN-Multiplexing (:spelling:ignore:`aka.` PIN-Ctrl.)
+   und PWM Vorteiler.
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+Du wirst nun im Anschluss diese drei Devicetree Overlays gezielt für vier
+Beispiele anwenden. Diese Beispiele sind übrigens mit die wichtigsten, wenn man
+als Zephyr Entwickler mit einem neuen Board das erste Mal in Kontakt kommt oder
+ein eigenes neues Board für Zephyr deklarieren möchte. Sobald nur irgendwie an
+der Hardware eine Taste oder LED an einem GPIO Port zu finden sind, kann mit so
+einfachen Mitteln eine erste funktionierende Zephyr Firmware erstellt werden.
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+.. rubric:: LED Blinky (GPIO)
+
+Das Zephyr Basic Beispiel :doc:`zephyr:samples/basic/blinky/README` benötigt
+den Aliasnamen:
+
+- ``led0`` für eine LED an einer einfachen GPIO Leitung (Zephyr GPIO API)
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``zephyr/samples/basic/blinky`` zusammen mit dem
+Devicetree Overlay :file:`makerpi-led_gp5.overlay`, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              zephyr/samples/basic/blinky                        \
+           -- -DEXTRA_DTC_OVERLAY_FILE=$(pwd)/makerpi-led_gp5.overlay
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   LED state: OFF
+   LED state: ON
+   LED state: OFF
+   LED state: ON
+   LED state: OFF
+   LED state: ON
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+.. rubric:: LED Blinky (PWM)
+
+Das Zephyr Basic Beispiel :doc:`zephyr:samples/basic/blinky_pwm/README` benötigt
+den Aliasnamen:
+
+- ``pwm-led0`` für eine LED an einem PWM Kanal  (Zephyr PWM API)
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``zephyr/samples/basic/blinky_pwm`` zusammen mit den
+Devicetree Overlays :file:`makerpi-led_gp5.overlay` und
+:file:`makerpi-pwm_gp5.overlay`, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              zephyr/samples/basic/blinky_pwm                    \
+           -- -DEXTRA_DTC_OVERLAY_FILE="                         \
+                 $(pwd)/makerpi-led_gp5.overlay                  \
+                 $(pwd)/makerpi-pwm_gp5.overlay                  \
+               "
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.193,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.273,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   PWM-based blinky
+   Calibrating for channel 5...
+   Done calibrating; maximum/minimum periods 125000000/7812500 nsec
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+.. rubric:: LED Fading (PWM)
+
+Das Zephyr Basic Beispiel :doc:`zephyr:samples/basic/fade_led/README` benötigt
+den Aliasnamen:
+
+- ``pwm-led0`` für eine LED an einem PWM Kanal  (Zephyr PWM API)
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``zephyr/samples/basic/fade_led`` zusammen mit den
+Devicetree Overlays :file:`makerpi-led_gp5.overlay` und
+:file:`makerpi-pwm_gp5.overlay`, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              zephyr/samples/basic/fade_led                      \
+           -- -DEXTRA_DTC_OVERLAY_FILE="                         \
+                 $(pwd)/makerpi-led_gp5.overlay                  \
+                 $(pwd)/makerpi-pwm_gp5.overlay                  \
+               "
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.193,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.273,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   PWM-based LED fade
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+.. rubric:: LED durch Taste (GPIO)
+
+Das Zephyr Basic Beispiel :doc:`zephyr:samples/basic/button/README` benötigt
+den Aliasnamen:
+
+- ``sw0`` für eine Taste an einer einfachen GPIO Leitung (Zephyr GPIO API)
+- ``led0`` für eine LED an einer einfachen GPIO Leitung (Zephyr GPIO API)
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``zephyr/samples/basic/button`` zusammen mit den
+Devicetree Overlays :file:`makerpi-led_gp5.overlay` und
+:file:`makerpi-btn_gp3.overlay`, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              zephyr/samples/basic/button                        \
+           -- -DEXTRA_DTC_OVERLAY_FILE="                         \
+                 $(pwd)/makerpi-led_gp5.overlay                  \
+                 $(pwd)/makerpi-btn_gp3.overlay                  \
+               "
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Set up button at gpio@40014000 pin 3
+   Set up LED at gpio@40014000 pin 5
+   Press the button
+   Button pressed at 2784536426
+   Button pressed at 3125707073
+   Button pressed at 3382275062
+   Button pressed at 3408247578
+   Button pressed at 3430233686
+   Button pressed at 3450950618
+   Button pressed at 3472858911
+   Button pressed at 3540071418
+   Button pressed at 3629439366
+   Button pressed at 3646657374
+   Button pressed at 3667006414
+   Button pressed at 3686349270
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   | :download:`ZD-cytron_maker_pi_rp2040-usbcons-basic-blinky.uf2
+     </_assets/ZD-cytron_maker_pi_rp2040-usbcons-basic-blinky.uf2>`,
+   | :download:`ZD-cytron_maker_pi_rp2040-usbcons-basic-blinky_pwm.uf2
+     </_assets/ZD-cytron_maker_pi_rp2040-usbcons-basic-blinky_pwm.uf2>`,
+   | :download:`ZD-cytron_maker_pi_rp2040-usbcons-basic-fade_led.uf2
+     </_assets/ZD-cytron_maker_pi_rp2040-usbcons-basic-fade_led.uf2>`,
+   | :download:`ZD-cytron_maker_pi_rp2040-usbcons-basic-button.uf2
+     </_assets/ZD-cytron_maker_pi_rp2040-usbcons-basic-button.uf2>`,
+   | :download:`makerpi-btn_gp3.overlay </_assets/makerpi-btn_gp3.overlay>`,
+   | :download:`makerpi-led_gp5.overlay </_assets/makerpi-led_gp5.overlay>`,
+   | :download:`makerpi-pwm_gp5.overlay </_assets/makerpi-pwm_gp5.overlay>`
+   | – als Not-Backup gedacht!
