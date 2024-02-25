@@ -1,0 +1,19 @@
+.. rubric:: Ausrüstung
+
+.. list-table::
+   :class: longtable
+   :align: center
+   :width: 100%
+   :widths: 20, 80
+   :header-rows: 1
+
+   * - Material
+     -
+
+   * - **Hardware:**
+     - Du benötigst exakt die selben Dinge wie in der
+       :ref:`Übung zuvor <demo-zephyr-basic-led-button>`.
+
+   * - **Software:**
+     - Du wirst eine neue Zephyr UF2 Firmware bauen, das Zephyr Beispiel
+       :doc:`zephyr:samples/basic/servo_motor/README`.

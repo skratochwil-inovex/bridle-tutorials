@@ -1,0 +1,82 @@
+.. rubric:: Durchführung
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``zephyr/samples/basic/servo_motor`` zusammen mit dem
+Snippet ``pwm-servo``, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+                                                  -S pwm-servo   \
+              zephyr/samples/basic/servo_motor
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+.. rubric:: Neue Zephyr UF2 Firmware mit extra Snippet benutzen
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   Servomotor control
+
+Dein erster Servomotor an **GP12** :spelling:ignore:`bzw.` dem **PWM Kanal 12**
+ändert stetig, je nach angeschlossenem Typ, entweder die Winkelposition oder
+die Drehrichtung und Drehgeschwindigkeit.
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... INFO ...............................................................
+
+.. rubric:: Experimente mit einem anderen Servomotor
+
+Hast du die Prinzipien der neuen Snippets und von Devicetree Overlays schon
+durchschaut? Wenn ja, dann ist es dir sicher möglich, auch einen anderen
+Servomotor zu benutzen. Du kannst in deinem eigenen West Workspace jederzeit
+Hand anlegen und Dateien verändern. Das eben benutze Snippet von Bridle,
+:file:`bridle/snippets/pwm-servo`, kannst du lokal verändern. Im dort abgelegten
+Devicetree Overlay müsste eine Device Node Reference geändert werden, von
+:devicetree:`&pwm_servo0` auf z.B. :devicetree:`&pwm_servo3`. Grob gesagt:
+
+1. :file:`bridle/snippets/pwm-servo/boards/cytron_maker_pi_rp2040.overlay`
+   öffnen
+2. :devicetree:`&pwm_servo0` auf :devicetree:`&pwm_servo3` ändern
+3. speichern
+4. Zephyr UF2 Firmware neu bauen
+5. Zephyr UF2 Firmware auf dein MCU-Board laden
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZD-cytron_maker_pi_rp2040-usbcons-basic-servo.uf2
+   </_assets/ZD-cytron_maker_pi_rp2040-usbcons-basic-servo.uf2>`
+   – als Not-Backup gedacht!
