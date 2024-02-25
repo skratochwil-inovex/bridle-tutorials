@@ -17,6 +17,7 @@ rinoh-typeface-dejavuserif = "^0"
 rinoh-typeface-dejavusans = "^0"
 rinoh-typeface-dejavusansmono = "^0"
 rinoh-typeface-symbola = "^0"
+sphinxcontrib-spelling = "^8"
 
 
 [tool.poetry.group.dev.dependencies]
