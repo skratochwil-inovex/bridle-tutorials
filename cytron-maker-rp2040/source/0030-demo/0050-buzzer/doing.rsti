@@ -1,0 +1,197 @@
+.. rst-class:: page-break
+
+   .. only:: rinoh
+
+      |nbsp|
+.. QUIRKS: Only with this dummy paragraph, the special rinohtype class
+   'page-break-paragraph' react as expected. But the '.. rubric::' directive
+   should also be handled as a 'ParagraphStyle' and trigger that class, But
+   it doesn't work as expected. Fix this later!
+
+.. rubric:: Durchführung
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``bridle/samples/buzzer``, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              bridle/samples/buzzer
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.381,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.465,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   [00:00:04.003,000] <inf> buzzersh: Buzzer shell is ready!
+   :bgn:`uart:~$` _
+
+Bereits mit dem Start des Beispiels solltest du einen *Beep* gehört haben. Du
+kannst den gleichen Ton auch selber erzeugen. Gib einfach mal ein::
+
+   buzzer beep
+
+So wie alle anderen Zephyr Shell Kommandos besitzt natürlich auch das neue
+Kommando :bcy:`buzzer` eine eingebaute Hilfe und wird durch die Command-line
+completion der Zephyr Shell unterstützt. Spiele einfach ein wenig damit, z.B.::
+
+   buzzer play funkytown
+   buzzer play folksong
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... HACK ...............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+.. rubric:: Happy Hacking – Happy Coding
+
+Lass uns nun einfach mal die Ausgabe hinter dem Unterkommando :bcy:`buzzer beep`
+mit einer eigenen Sequenz *"überschreiben"*. Das geht natürlich (noch) nicht life
+auf dem Zielsystem. Dafür müssen wir die C-Implementierung verändern, neu bauen
+und testen.
+
+Lass uns die Quellen schnell ändern. Hole deine **Online-Sitzung von VS Code**
+wieder in den Vordergrund und öffne aus deinem West Workspace die folgende
+C-Datei:
+
+   :file:`bridle/samples/buzzer/src/song_beep.c`
+
+Ändere nun den Inhalt des Arrays :code:`song_beep[]` nach gleichem Schema. Die
+Tonhöhe (*note*) und Tonlängen (*duration*) der jeweiligen Musiknoten sind in
+der Header-Datei :file:`songs.h` im gleichen Verzeichnis definiert. Du wirst
+diese aber kaum brauchen, da dir die folgende Abbildung die notwendigen Codes
+für die englische Benennung von Noten verrät. Genau diese brauchst du für die
+Tonhöhe (*note*).
+
+.. image:: /_images/doing/cmajor_scale.*
+   :align: center
+
+Gegenüber gestellt (NACHHER/VORHER) wirst du folgenden Inhalt erhalten:
+
+.. list-table::
+   :align: center
+   :width: 100%
+   :widths: 50, 50
+   :header-rows: 1
+
+   * - NACHHER
+     - VORHER
+
+   * - .. code-block:: C
+
+          #include "songs.h"
+
+          const struct note_duration
+          song_beep[] =
+          {
+              {.note = C4, .duration = eigth},
+              {.note = D4, .duration = eigth},
+              {.note = E4, .duration = eigth},
+              {.note = F4, .duration = eigth},
+              {.note = G4, .duration = eigth},
+              {.note = A4, .duration = eigth},
+              {.note = B4, .duration = eigth},
+              {.note = C5, .duration = eigth},
+          };
+          const size_t song_beep_notes =
+                       ARRAY_SIZE(song_beep);
+
+     - .. code-block:: C
+
+          #include "songs.h"
+
+          const struct note_duration
+          song_beep[] =
+          {
+              {.note = Db6, .duration = eigth},
+          };
+          const size_t song_beep_notes =
+                       ARRAY_SIZE(song_beep);
+
+.. rst-class:: page-break
+
+-----------------------------------------------------------------------------
+
+.. ..... BUILD ..............................................................
+
+.. image:: /_images/symbol-coder-server-bl.*
+   :class: sidecar
+
+Hole deine **Online-Sitzung von VS Code** wieder in den Vordergrund und **baue
+die Zephyr UF2 Firmware** ``bridle/samples/buzzer`` noch einmal, gib ein::
+
+   west build -p -b cytron_maker_pi_rp2040        -S usb-console \
+              bridle/samples/buzzer
+
+-----------------------------------------------------------------------------
+
+.. ..... FLASH ..............................................................
+
+.. image:: /_images/symbol-rp2040-uf2-rd.*
+   :class: sidecar
+
+**Lade** dir die **Zephyr UF2 Firmware** herunter und lade diese anschließend
+**auf dein MCU-Board**.
+
+-----------------------------------------------------------------------------
+
+.. ..... RESULT .............................................................
+
+.. image:: /_images/symbol-observe-or.*
+   :class: sidecar
+
+.. rubric:: Neue Zephyr UF2 Firmware mit Tonleiter als Beep benutzen
+
+Hole deinen **Terminalemulator** in den Vordergrund und **beobachte die
+Ausgaben**, folgendes muss zu sehen sein:
+
+.. parsed-literal::
+   :class: code
+
+   \*\*\*\*\* delaying boot 4000ms (per build configuration) \*\*\*\*\*
+   [00:00:00.381,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   [00:00:00.465,000] :byl:`<wrn> udc_rpi: BUS RESET`
+   \*\*\* Booting Zephyr OS build zephyr-v3.6… (delayed boot 4000ms) \*\*\*
+   [00:00:04.003,000] <inf> buzzersh: Buzzer shell is ready!
+   :bgn:`uart:~$` _
+
+.. include:: yourspace.rsti
+
+.. admonition:: Nur für Mentoren
+   :class: red-border bug
+   :collapsible:
+
+   :download:`ZD-cytron_maker_pi_rp2040-usbcons-bridle-buzzer.uf2
+   </_assets/ZD-cytron_maker_pi_rp2040-usbcons-bridle-buzzer.uf2>`
+   – als Not-Backup gedacht!
