@@ -176,6 +176,25 @@ numfig_format = {
     'table': 'Tabelle %s',
 }
 
+# -- Options for linkcheck builder -------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-linkcheck-builder
+
+user_agent = 'Mozilla/5.0 AppleWebKit/537.36 Chrome/87.0.4280.88 Safari/537.36'
+linkcheck_retries = 10
+linkcheck_timeout = 60
+linkcheck_workers = 10
+linkcheck_anchors = False
+linkcheck_ignore = [
+    'http://localhost:\d+/',
+]
+linkcheck_allowed_redirects = {
+    'https://www.cytron.io/p-maker-pi-rp2040': 'https://www.cytron.io/p-maker-pi-rp2040-simplifying-robotics-with-raspberry-pi-rp2040',
+    'https://rptl.io/debug-spec': 'https://datasheets.raspberrypi.com/debug/debug-connector-specification.pdf',
+    'https://github.com/raspberrypi/picoprobe': 'https://github.com/raspberrypi/debugprobe',
+    r'https://de.wikipedia\.org/wiki/.*': r'https://de.wikipedia\.org/wiki/.*',
+    r'https://raspberrypi\.com/.*': r'https://www.raspberrypi\.com/.*',
+}
+
 # -- Options for PDF output --------------------------------------------------
 # https://www.mos6581.org/rinohtype/master/quickstart.html#sphinx-quickstart
 

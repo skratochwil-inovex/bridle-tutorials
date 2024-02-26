@@ -135,10 +135,10 @@ Ready to contribute? Here's how to set yourself up for local development.
 
    ```bash
    $ ### NOT YET ### poetry run pytest
-   $ make -C cytron-maker-rp2040 spelling
    $ ### NOT YET ### make doctest
    $ ### NOT YET ### make coverage ; cat docs/build/coverage/python.txt
-   $ ### NOT YET ### make linkcheck
+   $ make -C cytron-maker-rp2040 spelling
+   $ make -C cytron-maker-rp2040 linkcheck
    ```
 
 1. Linting is done through [pre-commit](https://pre-commit.com). Provided you
