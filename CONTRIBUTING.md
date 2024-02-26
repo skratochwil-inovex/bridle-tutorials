@@ -135,7 +135,7 @@ Ready to contribute? Here's how to set yourself up for local development.
 
    ```bash
    $ ### NOT YET ### poetry run pytest
-   $ ### NOT YET ### make spelling
+   $ make -C cytron-maker-rp2040 spelling
    $ ### NOT YET ### make doctest
    $ ### NOT YET ### make coverage ; cat docs/build/coverage/python.txt
    $ ### NOT YET ### make linkcheck

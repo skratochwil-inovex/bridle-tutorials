@@ -105,6 +105,7 @@ needs_extensions = {
     'sphinx.ext.intersphinx':       needs_sphinx,
     'sphinx.ext.todo':              needs_sphinx,
 #   'sphinx_immaterial':            '0.11.10',
+    'sphinxcontrib.spelling':       '8.0.0',
 }
 
 extensions = [
@@ -113,6 +114,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx_immaterial',
+    'sphinxcontrib.spelling',
 ]
 
 templates_path = ['_templates']
@@ -278,3 +280,14 @@ intersphinx_mapping = {
 # https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
 
 todo_include_todos = True
+
+# -- Options for spelling extension ------------------------------------------
+# https://sphinxcontrib-spelling.readthedocs.io/en/stable/customize.html
+
+spelling_lang = 'de_DE'
+spelling_warning = True
+spelling_show_suggestions = True
+
+spelling_exclude_patterns = [
+    'todo.rst',
+]
