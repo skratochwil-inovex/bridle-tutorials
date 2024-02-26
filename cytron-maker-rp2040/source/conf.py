@@ -288,6 +288,14 @@ spelling_lang = 'de_DE'
 spelling_warning = True
 spelling_show_suggestions = True
 
+spelling_word_list_filename = [
+    '{}/companies'.format(os.path.join(DOCSRC, '_dicts')),
+    '{}/electronics'.format(os.path.join(DOCSRC, '_dicts')),
+    '{}/missing-de'.format(os.path.join(DOCSRC, '_dicts')),
+    '{}/missing-en'.format(os.path.join(DOCSRC, '_dicts')),
+    '{}/proper-nouns'.format(os.path.join(DOCSRC, '_dicts')),
+]
+
 spelling_exclude_patterns = [
     'todo.rst',
 ]
