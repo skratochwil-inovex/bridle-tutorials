@@ -1,3 +1,4 @@
+.. vi: ft=rst
 .. rubric:: Durchführung
 
 #. Suche dir alle notwendigen Hardwarekomponenten aus der Box zusammen.
@@ -28,6 +29,20 @@
         - .. image:: /_images/tabby/w11-rpi-dbgprobe-uart-console-select-baud.*
              :align: center
 
+  .. tip::
+
+      Es kann vorkommen, dass in deinem Terminalemulator einige Einstellungen
+      vorgenommen werden müssen, damit die Verbindung zum MCU-Board
+      hergestellt werden kann. Stelle sicher, dass dein Terminalprogramm die
+      folgenden Einstellungen verwendet:
+
+      - Baudrate: 115200
+      - Datenbits: 8
+      - Paritätsbit: kein
+      - Stopbit: 1
+
+      Man bezeichnet diese Kombination auch als '115200 8N1'.
+
 #. Fahre mit den beiden kleinen Flachbandkabeln fort. Stelle die **Verbindung**
    zwischen dem **USB Debug-Adapter und dem MCU-Board** laut Abbildung her.
    Achte darauf, dass die beiden Leitungen ``RxD/TxD`` aus Richtung MCU-Board
@@ -42,17 +57,18 @@
 
 #. **Verbinde** zum Schluss das **MCU-Board** über den **USB Hub** und dem
    **günen USB Kabel** mit deinem **Host-PC**. Achte darauf, dass am MCU-Board
-   der **Stromversorgungsschalter** auf der Position **"OFF"** steht
-   (der Schiebeschalter oberhalb der USB-Buchse).
+   der **Stromversorgungsschalter** (Schiebeschalter oberhalb der USB-Buchse)
+   auf der Position **"OFF"** steht.
 
    .. figure:: /_images/doing/cytron-maker-pi-rp2040-power.*
       :name: cytron-maker-pi-rp2040-power
 
       Stromversorgungsschalter auf dem *Cytron – Maker Pi RP2040*
 
-#. Bringe deine bereits laufende **Sitzung im Terminalemulator** in den
-   Vordergrund und schiebe dann den **Stromversorgungsschalter** am MCU-Board
-   auf die Position **"ON"**. Nun muss folgende Ausgabe im Terminalemulator
+#. Stelle nun sicher, dass du die **Sitzung im Terminalemulator**, die du oben
+   konfiguriert und geöffnet hast, auf deinem Host-PC sehen kannst. Schalte
+   jetzt das MCU-Board ein, indem du den **Stromversorgungsschalter** auf die
+   Position **"ON"** stellst. Nun muss folgende Ausgabe im Terminalemulator
    zu sehen sein::
 
       MicroPython v1.23.0-preview … … …; Raspberry Pi Pico with RP2040
@@ -69,19 +85,20 @@
       * - .. image:: /_images/tabby/w11-rpi-dbgprobe-uart-console-io-working.*
              :align: center
 
-#. Ja, in der Tat. Das ist Python! **Tippe doch einfach mal** ``help()`` **ein**,
-   um zu überprüfen, dass dein Terminalemulator mit dem USB Debug-Adapter auch
-   wirklich in beide Richtungen funktioniert und du nicht eventuell in deinem
-   Aufbau eine Leitung vergessen oder falsch verbunden hast. Du musst etwas wie
-   ``Welcome to MicroPython!`` zurückbekommen.
+#. Ja, in der Tat. Das ist Python! **Tippe doch einfach mal** ``help()`` **ein**
+   und drücke die :kbd:`ENTER`-Taste. Damit kannst du überprüfen, ob dein
+   Terminalemulator mit dem USB Debug-Adapter auch wirklich in beide Richtungen
+   funktioniert und du nicht eventuell in deinem Aufbau eine Leitung vergessen
+   oder falsch verbunden hast. Im Terminalemulator muss nun eine Ausgabe ähnlich
+   zu ``Welcome to MicroPython!`` erscheinen.
 
 .. rubric:: Zugabe
 
 Auch wenn wir uns hier (noch) nicht mit Python unter Zephyr beschäftigen, kannst
 du gerne die folgenden kleinen Beispiele direkt **in die MicroPython Console
-kopieren** und sehen, was passiert. Bitte auch immer auf das letzte :kbd:`ENTER`
-achten. Laufende Python Scripte können ganz einfach mit :kbd:`Ctrl-C` beendet
-werden.
+kopieren** und sehen, was passiert. Bitte achte darauf, auch immer die letzte
+Zeile mit der :kbd:`ENTER`-Taste zu beenden. Laufende Python Scripte können ganz
+einfach mit :kbd:`Ctrl-C` beendet werden.
 
 :Say Hello:
 

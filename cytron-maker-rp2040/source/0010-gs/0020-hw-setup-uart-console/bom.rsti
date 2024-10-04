@@ -1,3 +1,4 @@
+.. vi: ft=rst
 .. rubric:: Ausrüstung
 
 .. list-table::
@@ -20,7 +21,7 @@
 
        .. tip::
 
-          **Den USB Hub wirst du immer benötigen! Belasse ihn auch für alle
+          **Den USB-Hub wirst du immer benötigen! Belasse ihn auch für alle
           anderen Übungen in deinem Aufbau.**
 
    * - .. image:: /_images/boms/cytron-maker-pi-rp2040.*
