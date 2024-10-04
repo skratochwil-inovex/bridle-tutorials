@@ -185,7 +185,7 @@ linkcheck_timeout = 60
 linkcheck_workers = 10
 linkcheck_anchors = False
 linkcheck_ignore = [
-    'http://localhost:\d+/',
+    r'http://localhost:\d+/',
 ]
 linkcheck_allowed_redirects = {
     'https://www.cytron.io/p-maker-pi-rp2040': 'https://www.cytron.io/p-maker-pi-rp2040-simplifying-robotics-with-raspberry-pi-rp2040',
